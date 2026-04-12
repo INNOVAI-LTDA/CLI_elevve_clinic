@@ -1,55 +1,10 @@
 ```
-# Dependencies
-node_modules/
-
 # Environment variables
 .env
 .env.local
 .env.*
 
-# Build outputs
-dist/
-build/
-.next/
-.nuxt/
-public/dist/
-frontend/dist/
-
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDE specific
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-ENV/
-
-# Coverage
-coverage/
-htmlcov/
-
-# Local configuration
-local/
+# Examples and documentation
+.env.example
+GUIA_ENV.md
 ```
