@@ -1,54 +1,61 @@
 ```
-# Environment variables
-.env.local
-.env.production
-.env.*
-
 # Dependencies
 node_modules/
 
-# Build artifacts
-dist/
-build/
-target/
+# Environment
+.env
+.env.local
+.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
 
 # Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.py.class
-*.py.obj
 .Python
-env/
 venv/
 .venv/
-.venv.bak/
-pip-log.txt
-pip-selfcheck.json
-.python-version
+.env
+.env.local
 .pytest_cache/
 .mypy_cache/
 .coverage
 htmlcov/
-.tox/
 
-# Logs
-*.log
+# Build artifacts
+dist/
+build/
+*.egg-info/
+target/
+.gradle/
+*.class
+*.jar
+*.war
+*.ear
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
 
 # OS generated files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
-
-# Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+ehthumbs.db
+Icon?
+.directory
+.Trashes
+*.nib
+.vagrant/
+.svn/
+CVS/
 ```
