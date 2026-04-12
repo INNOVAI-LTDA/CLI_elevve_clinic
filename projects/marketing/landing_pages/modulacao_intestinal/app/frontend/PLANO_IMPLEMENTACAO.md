@@ -15,6 +15,140 @@
 
 ---
 
+## 🔄 Modos de Execução
+
+Este projeto deve suportar **dois modos de execução configurados**:
+
+### 🏠 Modo Local (Desenvolvimento/Testes)
+
+**Finalidade:** Permitir desenvolvimento, ajustes e testes antes e depois do deploy. Serve como bancada de testes local.
+
+**Características:**
+- A landing page roda em `localhost` (ex: `http://localhost:3000` ou `http://127.0.0.1:5500`)
+- Tailwind CSS em modo watch para compilação automática durante desenvolvimento
+- Hot reload para mudanças no HTML/CSS/JS
+- Imagens servidas localmente da pasta `/images`
+- CTAs podem apontar para ambientes de sandbox (WhatsApp teste, Calendly demo)
+- Analytics pode estar desativado ou usar propriedade de teste do GA4
+
+**Como Executar:**
+```bash
+# Instalar dependências
+npm install
+
+# Iniciar servidor de desenvolvimento com Tailwind watch mode
+npm run dev
+
+# Ou usar Live Server do VS Code / Python HTTP Server
+python -m http.server 5500
+```
+
+**URLs de Acesso Local:**
+- Principal: `http://localhost:3000/` ou `http://localhost:5500/`
+- Termos: `http://localhost:3000/termos-de-uso.html`
+- Privacidade: `http://localhost:3000/politica-de-privacidade.html`
+
+**Configurações Específicas:**
+- Variável de ambiente: `MODE=local`
+- Base URL relativa: `./` (caminhos relativos)
+- Debug mode: ativado
+- Console logs: visíveis para debugging
+
+---
+
+### 🌐 Modo Remoto (Produção)
+
+**Finalidade:** Landing page rodando em produção no domínio oficial.
+
+**Características:**
+- Acessível em `https://www.elevveclinic.com.br/intestino`
+- Tailwind CSS compilado e minificado para produção
+- Todas as otimizações de performance ativas (lazy loading, WebP, etc.)
+- CTAs apontam para destinos reais (WhatsApp oficial, Calendly production)
+- Google Analytics/GTM ativos com propriedade de produção
+- Headers de segurança configurados via `vercel.json`
+- SSL provisionado automaticamente pela Vercel (Let's Encrypt)
+
+**Como Executar:**
+```bash
+# Build para produção
+npm run build
+
+# Deploy na Vercel
+vercel --prod
+
+# Ou deploy automático via Git push
+git push origin main
+```
+
+**URLs de Acesso Remoto:**
+- Principal: `https://www.elevveclinic.com.br/intestino`
+- Termos: `https://www.elevveclinic.com.br/termos-de-uso`
+- Privacidade: `https://www.elevveclinic.com.br/politica-de-privacidade`
+
+**Configurações Específicas:**
+- Variável de ambiente: `MODE=production`
+- Base URL absoluta: `https://www.elevveclinic.com.br/intestino/`
+- Debug mode: desativado
+- Console logs: mínimos (apenas erros críticos)
+- CSP (Content Security Policy): restritiva para produção
+
+---
+
+### 📊 Comparativo: Local vs Remoto
+
+| Característica | Modo Local | Modo Remoto |
+|---------------|-----------|-------------|
+| **URL Base** | `http://localhost:3000/` | `https://www.elevveclinic.com.br/intestino` |
+| **Tailwind** | Watch mode (compilação em tempo real) | CSS estático minificado |
+| **Imagens** | Locais (pasta /images) | Locais + CDN Vercel |
+| **CTAs** | Sandbox/Teste | Produção (WhatsApp/Calendly oficial) |
+| **Analytics** | Desativado ou propriedade de teste | GA4/GTM produção |
+| **Debug** | Ativado | Desativado |
+| **Headers Segurança** | Básicos | Completos (CSP, HSTS, etc.) |
+| **SSL** | Não aplicável | Let's Encrypt (auto) |
+| **Performance** | Não otimizada | Otimizada (minify, lazy, cache) |
+
+---
+
+### 🔧 Configuração por Ambiente
+
+**Arquivo `.env.local` (desenvolvimento):**
+```env
+NODE_ENV=development
+MODE=local
+BASE_URL=/
+ANALYTICS_ID=G-XXXXXXXXXX-test
+WHATSAPP_NUMBER=5511999999999
+CALENDLY_URL=https://calendly.com/elevveclinic-demo
+DEBUG=true
+```
+
+**Arquivo `.env.production` (produção):**
+```env
+NODE_ENV=production
+MODE=production
+BASE_URL=https://www.elevveclinic.com.br/intestino
+ANALYTICS_ID=G-XXXXXXXXXX
+WHATSAPP_NUMBER=5511999999999
+CALENDLY_URL=https://calendly.com/elevveclinic
+DEBUG=false
+```
+
+**Script `package.json`:**
+```json
+{
+  "scripts": {
+    "dev": "tailwindcss -i ./input.css -o ./css/styles.css --watch",
+    "build": "tailwindcss -i ./input.css -o ./css/styles.css --minify",
+    "serve:local": "npx serve .",
+    "deploy": "vercel --prod"
+  }
+}
+```
+
+---
+
 ## 🔴 FASE 1 - CRÍTICO (Bloqueadores de Deploy)
 
 ### Tarefa 1.1: Reestruturação do Projeto
