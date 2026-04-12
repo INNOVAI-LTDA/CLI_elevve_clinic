@@ -5,7 +5,8 @@ node_modules/
 # Environment
 .env
 .env.local
-.env.*
+.env.production
+.env
 
 # Editors
 .vscode/
@@ -24,12 +25,10 @@ __pycache__/
 .Python
 venv/
 .venv/
-.env
-.env.local
-.pytest_cache/
-.mypy_cache/
-.coverage
-htmlcov/
+.ENV
+.venv.bak/
+pip-log.txt
+pip-selfcheck.json
 
 # Build artifacts
 dist/
@@ -47,15 +46,49 @@ target/
 *.exe
 *.out
 
-# OS generated files
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# OS
 .DS_Store
 Thumbs.db
-ehthumbs.db
-Icon?
-.directory
-.Trashes
-*.nib
-.vagrant/
-.svn/
-CVS/
+
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# Testing
+.mypy_cache/
+.pytest_cache/
+.nyc_output
+coverage/lcov-report
+
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
 ```

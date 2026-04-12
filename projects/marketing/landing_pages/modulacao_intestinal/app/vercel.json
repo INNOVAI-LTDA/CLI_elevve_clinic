@@ -17,7 +17,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/(.*\\.(jpg|jpeg|png|gif|webp|svg|ico))",
       "headers": [
         {
           "key": "X-Content-Type-Options",
