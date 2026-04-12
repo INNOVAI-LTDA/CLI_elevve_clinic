@@ -2,20 +2,19 @@
 # Dependencies
 node_modules/
 
-# Environment
+# Environment variables
 .env
 .env.local
 .env.production
 .env
 
-# Editors
-.vscode/
-.idea/
-
-# Logs and temp files
+# Logs
 *.log
-*.tmp
-*.swp
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
 
 # Python
 __pycache__/
@@ -23,6 +22,7 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
+env/
 venv/
 .venv/
 .ENV
@@ -30,7 +30,7 @@ venv/
 pip-log.txt
 pip-selfcheck.json
 
-# Build artifacts
+# Build outputs
 dist/
 build/
 *.egg-info/
