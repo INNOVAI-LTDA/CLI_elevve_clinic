@@ -2,10 +2,13 @@
 # .gitignore - Frontend Landing Page
 # ===========================================
 
-# Variáveis de ambiente (NUNCA commitar dados sensíveis)
+# Variáveis de ambiente
+# .env (ativo) NUNCA deve ser commitado - contém dados sensíveis do ambiente atual
 .env
-.env.local
-.env.production
+# .env.local e .env.production PODEM ser commitados - são templates de configuração
+!.env.local
+!.env.production
+# .env.example é o template base - sempre commitado
 !.env.example
 
 # Dependências
