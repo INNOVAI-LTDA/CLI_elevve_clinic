@@ -7,15 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileMenuButton.addEventListener('click', function() {
       mobileMenu.classList.toggle('hidden');
     });
-  }
 
-  // Close mobile menu when clicking on a link
-  const mobileLinks = mobileMenu.querySelectorAll('a');
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.add('hidden');
+    // Close mobile menu when clicking on a link
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
     });
-  });
+  }
 });
 
 // Dynamic Copyright Year
