@@ -127,13 +127,8 @@
   "cleanUrls": false,
   "redirects": [
     {
-      "source": "/",
-      "destination": "/intestino",
-      "permanent": true
-    },
-    {
       "source": "/index.html",
-      "destination": "/intestino",
+      "destination": "/",
       "permanent": true
     }
   ]
