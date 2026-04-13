@@ -8,11 +8,27 @@
   "rewrites": [
     {
       "source": "/intestino",
-      "destination": "/index.html"
+      "destination": "/public/intestino/index.html"
     },
     {
       "source": "/intestino/",
-      "destination": "/index.html"
+      "destination": "/public/intestino/index.html"
+    },
+    {
+      "source": "/emagrecimento",
+      "destination": "/public/emagrecimento/index.html"
+    },
+    {
+      "source": "/emagrecimento/",
+      "destination": "/public/emagrecimento/index.html"
+    },
+    {
+      "source": "/harmonizacao",
+      "destination": "/public/harmonizacao/index.html"
+    },
+    {
+      "source": "/harmonizacao/",
+      "destination": "/public/harmonizacao/index.html"
     }
   ],
   "headers": [
