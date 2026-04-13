@@ -23,8 +23,8 @@
       "destination": "/assets/:path*"
     },
     {
-      "source": "/intestino/hero-microbiome.webp",
-      "destination": "/hero-microbiome.webp"
+      "source": "/intestino/favicon.ico",
+      "destination": "/favicon.ico"
     },
     {
       "source": "/intestino/robots.txt",
@@ -76,5 +76,5 @@
     }
   ],
   "trailingSlash": false,
-  "cleanUrls": false
+  "cleanUrls": true
 }
