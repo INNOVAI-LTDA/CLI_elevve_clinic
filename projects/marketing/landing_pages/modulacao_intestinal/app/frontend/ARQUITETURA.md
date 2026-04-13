@@ -9,7 +9,7 @@ Esta documentação descreve a nova arquitetura da Landing Page de Modulação I
 ## 📁 Estrutura do Projeto
 
 ```
-LP_intestino/
+frontend/
 ├── public/                     # Assets estáticos servidos diretamente
 │   ├── favicon.ico
 │   ├── placeholder.svg

@@ -1,17 +1,33 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
-  "outputDirectory": "public",
+  "framework": "vite",
+  "outputDirectory": "dist",
   "devCommand": "npm run dev",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "rewrites": [
     {
+      "source": "/intestino/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/intestino/favicon.ico",
+      "destination": "/favicon.ico"
+    },
+    {
+      "source": "/intestino/robots.txt",
+      "destination": "/robots.txt"
+    },
+    {
+      "source": "/intestino/(.*\.(?:webp|png|jpg|jpeg|gif|svg|ico))",
+      "destination": "/$1"
+    },
+    {
       "source": "/intestino",
       "destination": "/index.html"
     },
     {
-      "source": "/intestino/",
+      "source": "/intestino/(.*)",
       "destination": "/index.html"
     }
   ],
@@ -42,34 +58,7 @@
       ]
     },
     {
-      "source": "/:path*.jpg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:path*.jpeg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:path*.png",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:path*.gif",
+      "source": "/assets/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -85,51 +74,8 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
-    },
-    {
-      "source": "/:path*.svg",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:path*.ico",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:path*.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:path*.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
     }
   ],
   "trailingSlash": false,
-  "cleanUrls": false,
-  "redirects": [
-    {
-      "source": "/index.html",
-      "destination": "/",
-      "permanent": true
-    }
-  ]
+  "cleanUrls": true
 }
