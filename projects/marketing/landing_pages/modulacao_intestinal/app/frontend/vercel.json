@@ -5,6 +5,18 @@
   "devCommand": "npm run dev",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/intestino",
+      "permanent": false
+    },
+    {
+      "source": "/index.html",
+      "destination": "/intestino",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/intestino/assets/:path*",
