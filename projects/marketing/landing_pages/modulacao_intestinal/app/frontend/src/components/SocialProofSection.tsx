@@ -1,7 +1,5 @@
 import provaSocial from "@/assets/prova-social.jpeg";
 
-const CTA_URL = "https://wa.me/5500000000000";
-
 const SocialProofSection = () => (
   <section className="py-20 md:py-28 bg-background">
     <div className="container mx-auto px-6 max-w-4xl">
