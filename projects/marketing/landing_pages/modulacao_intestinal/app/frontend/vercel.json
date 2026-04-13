@@ -7,8 +7,8 @@
   "installCommand": "npm install",
   "rewrites": [
     {
-      "source": "/intestino/assets/(.*)",
-      "destination": "/assets/$1"
+      "source": "/intestino/assets/:path*",
+      "destination": "/assets/:path*"
     },
     {
       "source": "/intestino/favicon.ico",
@@ -19,15 +19,11 @@
       "destination": "/robots.txt"
     },
     {
-      "source": "/intestino/(.*\.(?:webp|png|jpg|jpeg|gif|svg|ico))",
-      "destination": "/$1"
-    },
-    {
       "source": "/intestino",
       "destination": "/index.html"
     },
     {
-      "source": "/intestino/(.*)",
+      "source": "/intestino/:path*",
       "destination": "/index.html"
     }
   ],
@@ -59,15 +55,6 @@
     },
     {
       "source": "/assets/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:path*.webp",
       "headers": [
         {
           "key": "Cache-Control",
