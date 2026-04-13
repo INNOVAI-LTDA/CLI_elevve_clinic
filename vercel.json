@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "outputDirectory": "dist",
+  "outputDirectory": ".",
   "devCommand": "npm run dev",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
@@ -127,8 +127,13 @@
   "cleanUrls": false,
   "redirects": [
     {
+      "source": "/",
+      "destination": "/intestino",
+      "permanent": true
+    },
+    {
       "source": "/index.html",
-      "destination": "/",
+      "destination": "/intestino",
       "permanent": true
     }
   ]
