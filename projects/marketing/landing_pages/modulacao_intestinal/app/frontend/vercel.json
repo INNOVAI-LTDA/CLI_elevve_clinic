@@ -5,21 +5,38 @@
   "devCommand": "npm run dev",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/intestino/",
+      "permanent": false
+    },
+    {
+      "source": "/index.html",
+      "destination": "/intestino/",
+      "permanent": false
+    },
+    {
+      "source": "/intestino",
+      "destination": "/intestino/",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/intestino/assets/:path*",
       "destination": "/assets/:path*"
     },
     {
-      "source": "/intestino/favicon.ico",
-      "destination": "/favicon.ico"
+      "source": "/intestino/hero-microbiome.webp",
+      "destination": "/hero-microbiome.webp"
     },
     {
       "source": "/intestino/robots.txt",
       "destination": "/robots.txt"
     },
     {
-      "source": "/intestino",
+      "source": "/intestino/",
       "destination": "/index.html"
     },
     {
@@ -64,17 +81,5 @@
     }
   ],
   "trailingSlash": false,
-  "cleanUrls": true,
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "/intestino",
-      "permanent": false
-    },
-    {
-      "source": "/index.html",
-      "destination": "/intestino",
-      "permanent": false
-    }
-  ]
+  "cleanUrls": false
 }
