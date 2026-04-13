@@ -6,5 +6,3 @@ const sanitizeWhatsappNumber = (number?: string) =>
 const viteEnv = import.meta.env as Record<string, string | undefined>;
 
 export const CTA_URL = `https://wa.me/${sanitizeWhatsappNumber(viteEnv.VITE_WHATSAPP_NUMBER)}`;
-
-export const CTA_URL = `https://wa.me/${sanitizeWhatsappNumber(viteEnv.VITE_WHATSAPP_NUMBER)}`;
