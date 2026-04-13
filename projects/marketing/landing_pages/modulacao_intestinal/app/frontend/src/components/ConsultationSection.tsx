@@ -1,5 +1,4 @@
-const CTA_URL = "https://wa.me/5500000000000";
-
+import { CTA_URL } from "@/lib/cta";
 const ConsultationSection = () => (
   <section className="py-20 md:py-28 bg-olive-light">
     <div className="container mx-auto px-6 max-w-3xl text-center">

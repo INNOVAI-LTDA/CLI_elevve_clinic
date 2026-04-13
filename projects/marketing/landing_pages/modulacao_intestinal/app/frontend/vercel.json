@@ -8,12 +8,17 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/intestino",
+      "destination": "/intestino/",
       "permanent": false
     },
     {
       "source": "/index.html",
-      "destination": "/intestino",
+      "destination": "/intestino/",
+      "permanent": false
+    },
+    {
+      "source": "/intestino",
+      "destination": "/intestino/",
       "permanent": false
     }
   ],
@@ -76,5 +81,5 @@
     }
   ],
   "trailingSlash": false,
-  "cleanUrls": true
+  "cleanUrls": false
 }

@@ -1,6 +1,5 @@
 import draCristal from "@/assets/dra-cristal-2.jpeg";
-
-const CTA_URL = "https://wa.me/5500000000000";
+import { CTA_URL } from "@/lib/cta";
 
 const HeroSection = () => (
   <section className="relative min-h-screen flex items-center">
