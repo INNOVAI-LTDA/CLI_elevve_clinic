@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "vite",
-  "outputDirectory": "dist",
+  "framework": null,
+  "outputDirectory": "public",
   "devCommand": "npm run dev",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
@@ -11,7 +11,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/intestino/(.*)",
+      "source": "/intestino/",
       "destination": "/index.html"
     }
   ],
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "source": "/assets/:path*.jpg",
+      "source": "/:path*.jpg",
       "headers": [
         {
           "key": "Cache-Control",
@@ -51,7 +51,7 @@
       ]
     },
     {
-      "source": "/assets/:path*.jpeg",
+      "source": "/:path*.jpeg",
       "headers": [
         {
           "key": "Cache-Control",
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "source": "/assets/:path*.png",
+      "source": "/:path*.png",
       "headers": [
         {
           "key": "Cache-Control",
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "source": "/assets/:path*.gif",
+      "source": "/:path*.gif",
       "headers": [
         {
           "key": "Cache-Control",
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "source": "/assets/:path*.webp",
+      "source": "/:path*.webp",
       "headers": [
         {
           "key": "Cache-Control",
@@ -87,7 +87,7 @@
       ]
     },
     {
-      "source": "/assets/:path*.svg",
+      "source": "/:path*.svg",
       "headers": [
         {
           "key": "Cache-Control",
@@ -105,7 +105,7 @@
       ]
     },
     {
-      "source": "/assets/:path*.css",
+      "source": "/:path*.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -114,7 +114,7 @@
       ]
     },
     {
-      "source": "/assets/:path*.js",
+      "source": "/:path*.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -124,7 +124,7 @@
     }
   ],
   "trailingSlash": false,
-  "cleanUrls": true,
+  "cleanUrls": false,
   "redirects": [
     {
       "source": "/index.html",

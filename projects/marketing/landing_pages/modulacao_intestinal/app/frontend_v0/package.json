@@ -1,0 +1,30 @@
+{
+  "name": "elevve-clinic-intestino-landing-page",
+  "version": "1.0.0",
+  "description": "Landing page de Restauração Intestinal - Elevve Clinic",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run watch:css\" \"npx live-server --port=3000 --root=./public\"",
+    "watch:css": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
+    "build:css": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --minify",
+    "build": "npm run build:css && echo 'Build completed successfully'",
+    "preview": "npx live-server --port=3000 --root=./public"
+  },
+  "keywords": [
+    "landing-page",
+    "elevve-clinic",
+    "saude-intestinal",
+    "modulacao-intestinal"
+  ],
+  "author": "Elevve Clinic",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "tailwindcss": "^3.4.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "concurrently": "^8.2.2",
+    "live-server": "^1.2.2"
+  }
+}
