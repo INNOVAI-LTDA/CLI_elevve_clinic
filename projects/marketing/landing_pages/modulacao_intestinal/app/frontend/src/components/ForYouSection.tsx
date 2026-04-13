@@ -1,5 +1,4 @@
-const CTA_URL = "https://wa.me/5500000000000";
-
+import { CTA_URL } from "@/lib/cta";
 const forYou = [
   "Já tentou dieta, suplementação ou tratamentos sem resultado duradouro",
   "Sente que seu corpo não responde como deveria",

@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { CTA_URL } from "@/lib/cta";
 
 const FAQSection = () => {
   const faqs = [
@@ -69,7 +70,7 @@ const FAQSection = () => {
             Ainda tem dúvidas? Entre em contato conosco.
           </p>
           <a
-            href="https://wa.me/5511999999999"
+            href={CTA_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
