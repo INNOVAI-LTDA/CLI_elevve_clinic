@@ -10,8 +10,9 @@
     "check:cta-links": "node scripts/check-cta-links.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "npm run test:validation && vitest run",
+    "test:watch": "vitest",
+    "test:validation": "vitest run src/test/tracking.test.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
