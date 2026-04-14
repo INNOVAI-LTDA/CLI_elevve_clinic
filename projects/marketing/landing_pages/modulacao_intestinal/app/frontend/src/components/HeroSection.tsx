@@ -1,5 +1,5 @@
 import draCristal from "@/assets/dra-cristal-2.jpeg";
-import { CTA_URL } from "@/lib/cta";
+import { buildTrackedCtaUrl } from "@/lib/cta";
 
 const HeroSection = () => (
   <section className="relative min-h-screen flex items-center">
@@ -27,7 +27,7 @@ const HeroSection = () => (
           é possível que o seu intestino esteja desregulado — mesmo funcionando todos os dias.
         </p>
         <a
-          href={CTA_URL}
+          href={buildTrackedCtaUrl("HeroSection")}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-olive hover:bg-accent transition-colors px-8 py-4 rounded-lg font-body font-medium text-primary-foreground tracking-wide"

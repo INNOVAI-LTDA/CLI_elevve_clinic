@@ -19,6 +19,10 @@
   ],
   "rewrites": [
     {
+      "source": "/mod-whatsapp",
+      "destination": "/api/mod-whatsapp"
+    },
+    {
       "source": "/intestino/assets/:path*",
       "destination": "/assets/:path*"
     },

@@ -1,5 +1,5 @@
 import draCristal from "@/assets/dra-cristal-1.jpeg";
-import { CTA_URL } from "@/lib/cta";
+import { buildTrackedCtaUrl } from "@/lib/cta";
 
 const DoctorSection = () => (
   <section className="py-20 md:py-28 bg-muted">
@@ -15,7 +15,7 @@ const DoctorSection = () => (
             Atuação focada na correção da base metabólica com acompanhamento contínuo.
           </p>
           <a
-            href={CTA_URL}
+            href={buildTrackedCtaUrl("DoctorSection")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-olive hover:bg-accent transition-colors px-8 py-4 rounded-lg font-body font-medium text-primary-foreground tracking-wide"

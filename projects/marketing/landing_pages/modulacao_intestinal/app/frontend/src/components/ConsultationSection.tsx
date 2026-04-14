@@ -1,4 +1,4 @@
-import { CTA_URL } from "@/lib/cta";
+import { buildTrackedCtaUrl } from "@/lib/cta";
 const ConsultationSection = () => (
   <section className="py-20 md:py-28 bg-olive-light">
     <div className="container mx-auto px-6 max-w-3xl text-center">
@@ -10,7 +10,7 @@ const ConsultationSection = () => (
       </p>
 
       <a
-        href={CTA_URL}
+        href={buildTrackedCtaUrl("ConsultationSection")}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-block bg-olive hover:bg-accent transition-colors px-8 py-4 rounded-lg font-body font-medium text-primary-foreground tracking-wide mb-16"
