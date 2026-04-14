@@ -1,5 +1,5 @@
 import draCristal from "@/assets/dra-cristal-2.jpeg";
-import { CTA_URL } from "@/lib/cta";
+import { CTA_URL, handleCTAClick } from "@/lib/cta";
 
 const HeroSection = () => (
   <section className="relative min-h-screen flex items-center">
@@ -28,6 +28,7 @@ const HeroSection = () => (
         </p>
         <a
           href={CTA_URL}
+          onClick={(event) => handleCTAClick(event, "hero")}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-olive hover:bg-accent transition-colors px-8 py-4 rounded-lg font-body font-medium text-primary-foreground tracking-wide"

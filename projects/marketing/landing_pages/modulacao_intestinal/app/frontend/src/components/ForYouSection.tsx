@@ -1,4 +1,4 @@
-import { CTA_URL } from "@/lib/cta";
+import { CTA_URL, handleCTAClick } from "@/lib/cta";
 const forYou = [
   "Já tentou dieta, suplementação ou tratamentos sem resultado duradouro",
   "Sente que seu corpo não responde como deveria",
@@ -54,6 +54,7 @@ const ForYouSection = () => (
       <div className="text-center">
         <a
           href={CTA_URL}
+          onClick={(event) => handleCTAClick(event, "for_you")}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-olive hover:bg-accent transition-colors px-8 py-4 rounded-lg font-body font-medium text-primary-foreground tracking-wide"
