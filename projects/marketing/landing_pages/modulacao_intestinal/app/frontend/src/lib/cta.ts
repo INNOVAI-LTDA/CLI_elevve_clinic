@@ -1,17 +1,6 @@
-const DEFAULT_WHATSAPP_NUMBER = "5511944885013";
-
-const sanitizeWhatsappNumber = (number?: string) => number?.replace(/\D/g, "");
-
-const normalizeProxyUrl = (url?: string) => {
-  const normalized = url?.trim();
-  return normalized ? normalized : undefined;
-};
+const DEFAULT_WHATSAPP_PROXY_URL = "https://dracristal.com.br/mod-whatsapp";
 
 const viteEnv = import.meta.env as Record<string, string | undefined>;
 
-const ctaProxyUrl = normalizeProxyUrl(viteEnv.VITE_CTA_PROXY_URL);
-const whatsappNumber = sanitizeWhatsappNumber(viteEnv.VITE_WHATSAPP_NUMBER);
-
-const fallbackWhatsappNumber = whatsappNumber || DEFAULT_WHATSAPP_NUMBER;
-
-export const CTA_URL = ctaProxyUrl || `https://wa.me/${fallbackWhatsappNumber}`;
+export const CTA_URL =
+  viteEnv.VITE_WHATSAPP_PROXY_URL?.trim() || DEFAULT_WHATSAPP_PROXY_URL;
