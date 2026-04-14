@@ -136,11 +136,18 @@ Index.tsx (Página Principal)
 npm run dev          # Inicia servidor de desenvolvimento (porta 5173)
 npm run build        # Build para produção
 npm run build:dev    # Build modo desenvolvimento
+npm run check:cta-links # Valida uso de CTA_URL e bloqueia links diretos de WhatsApp em src/components
 npm run lint         # Linting com ESLint
 npm run preview      # Preview do build em produção
 npm run test         # Executa testes com Vitest
 npm run test:watch   # Testes em modo watch
 ```
+
+### Padrão obrigatório para CTAs externos
+
+- Todo CTA externo deve usar a constante `CTA_URL` definida em `src/lib/cta.ts`.
+- É proibido hardcode de links diretos como `https://wa.me`, `https://api.whatsapp.com` ou `https://whatsapp.com/send` em `src/components`.
+- Execute `npm run check:cta-links` antes de abrir PR para validar o padrão.
 
 ---
 
