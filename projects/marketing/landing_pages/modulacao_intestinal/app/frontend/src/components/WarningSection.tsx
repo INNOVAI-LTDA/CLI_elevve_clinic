@@ -11,18 +11,9 @@ const WarningSection = () => {
               <h2 className="text-2xl font-serif font-bold text-gray-900 mb-4">
                 Atenção: Este protocolo não é para todos
               </h2>
-              <p className="text-gray-700 mb-4 leading-relaxed">
-                O Protocolo de Restauração Intestinal Elevve foi desenvolvido para pessoas que já tentaram múltiplas abordagens sem sucesso duradouro. 
-                Não é uma solução rápida ou mágica, mas sim um processo profundo de investigação e transformação.
-              </p>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Se você busca resultados imediatos sem comprometimento com mudanças de estilo de vida, esta abordagem pode não ser adequada para você. 
-                Nosso método exige dedicação, acompanhamento rigoroso e paciência para reconstruir sua saúde intestinal de forma sustentável.
-              </p>
               <div className="bg-amber-100 rounded-lg p-4">
                 <p className="text-amber-900 font-medium">
-                  ⚠️ Importante: Este protocolo requer acompanhamento médico especializado e exames laboratoriais completos. 
-                  Não tente implementar estas estratégias por conta própria.
+                  Este protocolo requer acompanhamento médico especializado e exames laboratoriais completos. Não tente implementar estas estratégias por conta própria.
                 </p>
               </div>
             </div>
