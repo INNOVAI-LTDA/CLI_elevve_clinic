@@ -1,6 +1,6 @@
 const DEFAULT_WHATSAPP_PROXY_URL = "https://dracristal.com.br/mod-whatsapp";
 
-const viteEnv = import.meta.env as Record<string, string | undefined>;
+export const resolveCtaUrl = (ctaProxyUrl = import.meta.env.VITE_CTA_PROXY_URL) =>
+  ctaProxyUrl?.trim() || DEFAULT_WHATSAPP_PROXY_URL;
 
-export const CTA_URL =
-  viteEnv.VITE_WHATSAPP_PROXY_URL?.trim() || DEFAULT_WHATSAPP_PROXY_URL;
+export const CTA_URL = resolveCtaUrl();

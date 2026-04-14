@@ -159,6 +159,7 @@ Todas as variáveis usam o prefixo `VITE_` para exposição no client-side:
 |----------|-----------|---------|
 | `VITE_MODE` | Ambiente atual | `local`, `production` |
 | `VITE_BASE_URL` | URL base da aplicação | `http://localhost:5173` |
+| `VITE_CTA_PROXY_URL` | URL de proxy usada pelos CTAs externos | `https://dracristal.com.br/mod-whatsapp` |
 | `VITE_WHATSAPP_NUMBER` | Número do WhatsApp | `5511999999999` |
 | `VITE_WHATSAPP_MESSAGE` | Mensagem padrão | `Olá! Vim pela LP...` |
 | `VITE_CALENDLY_URL` | Link do Calendly | `https://calendly.com/...` |
