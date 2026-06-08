@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "pi_hormonios",
+      "pillar_code": "hormonios",
+      "name": "Hormônios",
+      "description": "Estabilidade hormonal e neuroendócrina.",
+      "score_max": 36,
+      "display_order": 1,
+      "is_active": true
+    },
+    {
+      "id": "pi_intestino",
+      "pillar_code": "intestino",
+      "name": "Intestino",
+      "description": "Digestão, absorção e tolerância alimentar adequadas.",
+      "score_max": 36,
+      "display_order": 2,
+      "is_active": true
+    },
+    {
+      "id": "pi_recuperacao",
+      "pillar_code": "recuperacao",
+      "name": "Recuperação",
+      "description": "Capacidade de recuperação e adaptação ao estresse físico e mental.",
+      "score_max": 39,
+      "display_order": 3,
+      "is_active": true
+    },
+    {
+      "id": "pi_estrutura",
+      "pillar_code": "estrutura",
+      "name": "Estrutura",
+      "description": "Manutenção da força, resistência e integridade física ao longo do tempo.",
+      "score_max": 39,
+      "display_order": 4,
+      "is_active": true
+    },
+    {
+      "id": "pi_metabolismo",
+      "pillar_code": "metabolismo",
+      "name": "Metabolismo",
+      "description": "Produção e estabilidade de energia metabólica.",
+      "score_max": 33,
+      "display_order": 5,
+      "is_active": true
+    }
+  ]
+}

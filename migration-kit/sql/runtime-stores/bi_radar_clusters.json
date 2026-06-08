@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "cl_metabolismo",
+      "cluster_code": "cl_metabolismo",
+      "pillar_code": "metabolismo",
+      "cluster_name": "Cluster Metabólico",
+      "activation_threshold": 2,
+      "minimum_key_symptoms": 3,
+      "bonus_points": 3.0,
+      "is_active": true,
+      "key_question_codes": ["metabolismo_01", "metabolismo_05", "metabolismo_06"]
+    },
+    {
+      "id": "cl_hormonios",
+      "cluster_code": "cl_hormonios",
+      "pillar_code": "hormonios",
+      "cluster_name": "Cluster Hormonal",
+      "activation_threshold": 2,
+      "minimum_key_symptoms": 3,
+      "bonus_points": 3.0,
+      "is_active": true,
+      "key_question_codes": ["hormonios_05", "hormonios_06", "hormonios_08"]
+    },
+    {
+      "id": "cl_recuperacao",
+      "cluster_code": "cl_recuperacao",
+      "pillar_code": "recuperacao",
+      "cluster_name": "Cluster Recuperação",
+      "activation_threshold": 2,
+      "minimum_key_symptoms": 3,
+      "bonus_points": 3.0,
+      "is_active": true,
+      "key_question_codes": ["recuperacao_02", "recuperacao_06", "recuperacao_extra_01"]
+    }
+  ]
+}

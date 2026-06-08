@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "items": [
+    { "id": "ir_metabolismo_01", "pillar_code": "metabolismo", "label": "Estável",                 "min_score": 0.0,  "max_score": 7.0,  "priority_level": 1 },
+    { "id": "ir_metabolismo_02", "pillar_code": "metabolismo", "label": "Atenção funcional",       "min_score": 8.0,  "max_score": 14.0, "priority_level": 2 },
+    { "id": "ir_metabolismo_03", "pillar_code": "metabolismo", "label": "Desregulação importante", "min_score": 15.0, "max_score": 22.0, "priority_level": 3 },
+    { "id": "ir_metabolismo_04", "pillar_code": "metabolismo", "label": "Eixo prioritário",        "min_score": 23.0, "max_score": null, "priority_level": 4 },
+
+    { "id": "ir_intestino_01",   "pillar_code": "intestino",   "label": "Estável",                 "min_score": 0.0,  "max_score": 8.0,  "priority_level": 1 },
+    { "id": "ir_intestino_02",   "pillar_code": "intestino",   "label": "Atenção funcional",       "min_score": 9.0,  "max_score": 16.0, "priority_level": 2 },
+    { "id": "ir_intestino_03",   "pillar_code": "intestino",   "label": "Desregulação importante", "min_score": 17.0, "max_score": 24.0, "priority_level": 3 },
+    { "id": "ir_intestino_04",   "pillar_code": "intestino",   "label": "Eixo prioritário",        "min_score": 25.0, "max_score": null, "priority_level": 4 }
+  ]
+}
