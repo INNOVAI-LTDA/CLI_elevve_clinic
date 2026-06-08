@@ -1,0 +1,185 @@
+/* BI Radar de Longevidade - estilos por feature.
+   Prefixo "bi-" para nao colidir com .radar-* do Radar de Transformacao. */
+
+.bi-radar-page {
+  display: grid;
+  gap: 12px;
+  color: #f2f2f2;
+}
+
+.bi-radar-control-row {
+  display: grid;
+  grid-template-columns: minmax(200px, 280px) minmax(260px, 1fr);
+  gap: 12px;
+}
+
+.bi-radar-select-wrap,
+.bi-radar-patient-chip,
+.bi-radar-panel,
+.bi-radar-insight,
+.bi-radar-kpi-grid article {
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.98) 0%, rgba(11, 11, 11, 0.98) 100%);
+  padding: 14px;
+}
+
+.bi-radar-select-wrap span,
+.bi-radar-patient-chip p,
+.bi-radar-kpi-grid span {
+  display: block;
+  margin: 0 0 6px;
+  color: #f2ce73;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bi-radar-select-wrap select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background-color: var(--color-bg-secondary);
+  color: #f2f2f2;
+  padding: 10px 12px;
+}
+
+.bi-radar-select-wrap select:hover {
+  border-color: rgba(242, 206, 115, 0.56);
+}
+
+.bi-radar-select-wrap select:focus,
+.bi-radar-select-wrap select:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 2px;
+  border-color: rgba(var(--color-accent-primary-rgb), 0.7);
+}
+
+.bi-radar-select-wrap select option {
+  color: #f2f2f2;
+  background-color: var(--color-bg-secondary);
+}
+
+.bi-radar-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.bi-radar-kpi-grid strong {
+  font-size: 22px;
+  color: #f2f2f2;
+}
+
+.bi-radar-pillar-list {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bi-radar-pillar-item {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 12px 14px;
+  border-left: 3px solid transparent;
+  display: grid;
+  gap: 6px;
+}
+
+.bi-radar-pillar-item.is-priority {
+  border-left-color: var(--color-accent-primary);
+  background: rgba(var(--color-accent-primary-rgb), 0.08);
+}
+
+.bi-radar-pillar-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bi-radar-pillar-top strong {
+  font-size: 16px;
+  color: #f2f2f2;
+}
+
+.bi-radar-pillar-top small {
+  color: #f2ce73;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bi-radar-pillar-values {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  color: #b7c9e4;
+  font-size: 12px;
+}
+
+.bi-radar-pillar-values span strong {
+  color: #f2f2f2;
+  font-weight: 600;
+}
+
+.bi-radar-classification {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f2f2f2;
+}
+
+.bi-radar-classification--pending {
+  border-color: rgba(217, 161, 0, 0.6);
+  background: rgba(217, 161, 0, 0.12);
+  color: #d9a100;
+}
+
+.bi-radar-classification--alerta {
+  border-color: rgba(217, 161, 0, 0.6);
+  background: rgba(217, 161, 0, 0.12);
+  color: #d9a100;
+}
+
+.bi-radar-classification--critico,
+.bi-radar-classification--prioritario {
+  border-color: rgba(214, 69, 69, 0.6);
+  background: rgba(214, 69, 69, 0.14);
+  color: #d64545;
+}
+
+.bi-radar-classification--estavel {
+  border-color: rgba(57, 181, 106, 0.5);
+  background: rgba(57, 181, 106, 0.12);
+  color: #39b56a;
+}
+
+.bi-radar-cluster {
+  font-size: 11px;
+  color: #b7c9e4;
+}
+
+.bi-radar-cluster--on {
+  color: var(--color-accent-primary);
+  font-weight: 700;
+}
+
+.bi-radar-state {
+  margin: 0;
+  padding: 8px 0;
+  color: #b7c9e4;
+}
+
+.bi-radar-state--error {
+  color: #d64545;
+}
