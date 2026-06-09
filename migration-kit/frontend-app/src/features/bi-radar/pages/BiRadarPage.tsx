@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useBiPatientList, usePatientBiRadar } from "../../../domain/hooks/useBiRadar";
-import { MentorShell } from "../../mentor/components/MentorShell";
+import { env } from "../../../shared/config/env";
 import "../bi-radar.css";
 
 /**
- * Tela principal do BI Radar de Longevidade (Commit 5).
+ * Tela principal do BI Radar de Longevidade (Commit 5 / F2).
+ *
+ * F2 refactor: o `MentorShell` foi removido (F3 deleta os arquivos do
+ * Acelerador Medico). Shell inline minimo ate F5 construir o BiShell
+ * definitivo baseado nos croquis.
  *
  * Sem grafico ainda (vai no Commit 6). Lista os 5 pilares com
  * scores brutos, cluster, score final, risco, equilibrio e
@@ -37,8 +41,7 @@ export function BiRadarPage() {
     radarResource.data.axes.find((a) => a.isPriorityAxis) ?? null;
 
   return (
-    <MentorShell
-      activeView="bi-radar"
+    <BiShellInline
       brandLabel="BI Elevve"
       brandTitle="Radar de Longevidade"
       metrics={[
@@ -186,7 +189,7 @@ export function BiRadarPage() {
           )}
         </section>
       </section>
-    </MentorShell>
+    </BiShellInline>
   );
 }
 
@@ -213,4 +216,49 @@ function badgeClassFor(classification: string): string {
   if (key.includes("estavel"))
     return "bi-radar-classification bi-radar-classification--estavel";
   return "bi-radar-classification";
+}
+
+/**
+ * Shell inline temporario ate F5 construir o BiShell baseado
+ * nos croquis. F2 removeu o MentorShell do Acelerador Medico.
+ */
+function BiShellInline({
+  brandLabel,
+  brandTitle,
+  metrics,
+  children,
+}: {
+  brandLabel: string;
+  brandTitle: string;
+  metrics: Array<{ label: string; value: string; tone?: "neutral" | "accent" | "success" | "warning" }>;
+  children: ReactNode;
+}) {
+  return (
+    <section className="bi-shell-inline">
+      <header className="bi-shell-inline__header">
+        <div>
+          <p>{brandLabel}</p>
+          <strong>{brandTitle}</strong>
+        </div>
+      </header>
+      {metrics.length > 0 && (
+        <section className="bi-shell-inline__metrics">
+          {metrics.map((m) => (
+            <article
+              key={`${m.label}-${m.value}`}
+              className={
+                m.tone
+                  ? `bi-shell-inline__metric bi-shell-inline__metric--${m.tone}`
+                  : "bi-shell-inline__metric"
+              }
+            >
+              <span>{m.label}</span>
+              <strong>{m.value}</strong>
+            </article>
+          ))}
+        </section>
+      )}
+      <div className="bi-shell-inline__content">{children}</div>
+    </section>
+  );
 }

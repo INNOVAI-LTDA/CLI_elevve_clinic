@@ -4,24 +4,21 @@ import { LoginPage } from "../pages/LoginPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { AccessDeniedPage } from "../pages/AccessDeniedPage";
 
-import { CommandCenterPage } from "../features/command-center/pages/CommandCenterPage";
-import { RadarPage } from "../features/radar/pages/RadarPage";
-import { MatrixPage } from "../features/matrix/pages/MatrixPage";
 import { BiRadarPage } from "../features/bi-radar/pages/BiRadarPage";
-import { StudentPage } from "../features/student/pages/StudentPage";
-import { AdminPage } from "../features/admin/pages/AdminPage";
 
 import { useAuth } from "./providers/AuthProvider";
 import { getDefaultRouteForRole, isKnownUserRole } from "../shared/auth/roleRouting";
 import { env } from "../shared/config/env";
 
-// Entity List Components
-import { MeasurementsList } from "../features/measurements/components/MeasurementsList";
-import { ProtocolsList } from "../features/protocols/components/ProtocolsList";
-import { OrganizationsList } from "../features/organizations/components/OrganizationsList";
-import { EnrollmentsList } from "../features/enrollments/components/EnrollmentsList";
-import { UsersList } from "../features/users/components/UsersList";
-import { CheckpointsList } from "../features/checkpoints/components/CheckpointsList";
+/**
+ * F2 refactor: rotas do Acelerador Medico (centro-comando, radar
+ * antigo, matriz-renovacao, aluno, admin, measurements, etc.)
+ * foram dropadas. O BI Elevve e' o unico produto do frontend.
+ *
+ * F3 (proxima fase) vai deletar os arquivos de
+ * `features/{radar,matrix,command-center,mentor,student,admin,...}/`
+ * que ficaram sem uso.
+ */
 
 function AuthLoadingFallback() {
   return (
@@ -45,64 +42,6 @@ function RequireAuth() {
   return <Outlet />;
 }
 
-function RequireAdmin() {
-  const { authReady, isAuthenticated, user } = useAuth();
-
-  if (!authReady) {
-    return <AuthLoadingFallback />;
-  }
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (!user || !isKnownUserRole(user.role)) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (user.role !== "admin") {
-    return <Navigate to="/app/acesso-negado" replace />;
-  }
-
-  return <Outlet />;
-}
-
-function RequireMentorWorkspace() {
-  const { authReady, isAuthenticated, user } = useAuth();
-
-  if (!authReady) {
-    return <AuthLoadingFallback />;
-  }
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (!user || user.role !== "mentor") {
-    return <Navigate to="/app/acesso-negado" replace />;
-  }
-
-  return <Outlet />;
-}
-
-function RequireStudentWorkspace() {
-  const { authReady, isAuthenticated, user } = useAuth();
-
-  if (!authReady) {
-    return <AuthLoadingFallback />;
-  }
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (!user || user.role !== "aluno") {
-    return <Navigate to="/app/acesso-negado" replace />;
-  }
-
-  return <Outlet />;
-}
-
 function RoleHomeRedirect() {
   const { authReady, isAuthenticated, user } = useAuth();
 
@@ -114,11 +53,11 @@ function RoleHomeRedirect() {
     return <Navigate to="/login" replace />;
   }
 
-  if (!user || !isKnownUserRole(user.role)) {
+  if (!user || !isKnownUserRole(user.userType)) {
     return <Navigate to="/login" replace />;
   }
 
-  return <Navigate to={getDefaultRouteForRole(user.role)} replace />;
+  return <Navigate to={getDefaultRouteForRole(user.userType)} replace />;
 }
 
 export const appRoutes: RouteObject[] = [
@@ -135,38 +74,16 @@ export const appRoutes: RouteObject[] = [
         children: [
           { index: true, element: <RoleHomeRedirect /> },
           { path: "acesso-negado", element: <AccessDeniedPage /> },
-          {
-            element: <RequireMentorWorkspace />,
-            children: [
-
-              { path: "centro-comando", element: <CommandCenterPage /> },
-              { path: "radar", element: <RadarPage /> },
-              { path: "bi/radar", element: <BiRadarPage /> },
-              { path: "matriz-renovacao", element: <MatrixPage /> }
-              , { path: "measurements", element: <MeasurementsList /> }
-              , { path: "protocols", element: <ProtocolsList /> }
-              , { path: "organizations", element: <OrganizationsList /> }
-              , { path: "enrollments", element: <EnrollmentsList /> }
-              , { path: "users", element: <UsersList /> }
-              , { path: "checkpoints", element: <CheckpointsList /> }
-            ]
-          },
-          {
-            element: <RequireStudentWorkspace />,
-            children: [{ path: "aluno", element: <StudentPage /> }]
-          },
-          {
-            path: "admin",
-            element: <RequireAdmin />,
-            children: [{ index: true, element: <AdminPage /> }]
-          }
-        ]
+          // F2: rotas do BI Elevve (placeholder; F4+ adiciona
+          // overview, historico, relatorio)
+          { path: "bi/radar", element: <BiRadarPage /> },
+        ],
       },
-      { path: "*", element: <NotFoundPage /> }
-    ]
-  }
+      { path: "*", element: <NotFoundPage /> },
+    ],
+  },
 ];
 
 export const appRouter = createBrowserRouter(appRoutes, {
-  basename: env.routerBasePath
+  basename: env.routerBasePath,
 });
