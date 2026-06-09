@@ -5,6 +5,9 @@ Mirror do contract TypeScript em migration-kit/contracts/frontend/biRadar.ts
 
 Pydantic v2 com field names em camelCase para casar com o JSON
 de saida do backend e com o tipo TypeScript do frontend.
+
+F1 refactor: clientes do BI sao User de tipo Client. BiRadarClientDto
+substitui o antigo BiRadarPatientDto.
 """
 from __future__ import annotations
 
@@ -22,11 +25,16 @@ class BiRadarPillarDto(BaseModel):
     displayOrder: int
 
 
-class BiRadarPatientDto(BaseModel):
-    """Item da lista de pacientes (usado em /bi/radar/patients)."""
-    patientId: str
-    patientCode: str
-    name: str
+class BiRadarClientDto(BaseModel):
+    """Cliente (User de tipo Client) usado no BI Radar.
+
+    F1 refactor: substitui BiRadarPatientDto. Os campos sao derivados
+    de deva_elevveclinic_users (role='client').
+    """
+    userId: int
+    email: str
+    fullName: str
+    role: str  # sempre "client" para este DTO
     programName: Optional[str] = None
 
 
@@ -55,8 +63,8 @@ class BiRadarSummaryDto(BaseModel):
 
 
 class BiRadarComputationDto(BaseModel):
-    """Resposta completa do calculo do Radar para 1 paciente."""
-    patientId: str
+    """Resposta completa do calculo do Radar para 1 cliente."""
+    userId: int
     calculatedAt: str
     axes: list[BiRadarAxisScoreDto]
     priorityAxisKey: str

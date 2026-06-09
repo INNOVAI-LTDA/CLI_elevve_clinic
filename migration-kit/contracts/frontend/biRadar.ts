@@ -1,15 +1,19 @@
 /**
- * BI Radar de Longevidade — contract DTO (espelho do backend
+ * BI Radar de Longevidade - contract DTO (espelho do backend
  * FastAPI em migration-kit/backend-integration/schemas/bi_radar.py).
  *
- * Quando o frontend precisar deste contract, criar copia em
- * migration-kit/frontend-app/src/contracts/biRadar.ts (Commit 5).
+ * Manter este arquivo em sincronia manual com o spec autoritativo
+ * em migration-kit/contracts/frontend/biRadar.ts.
+ *
+ * F1 refactor: clientes do BI sao User de tipo Client em
+ * deva_elevveclinic_users. BiRadarClientDto substitui o antigo
+ * BiRadarPatientDto.
  *
  * Convencoes:
  * - camelCase para todos os campos (Pydantic emite JSON com o nome
  *   do field por default; field names ja estao em camelCase).
- * - Optional/nullable: `description`, `axisSub`, `scoreMax`,
- *   `programName` podem ser null.
+ * - Optional/nullable: description, axisSub, scoreMax, programName
+ *   podem ser null.
  * - Envelope de erro segue o contrato canonico (api/errors.py):
  *     { "error": { "status", "code", "message", "details" } }
  */
@@ -22,10 +26,11 @@ export type BiRadarPillarDto = {
   displayOrder: number;
 };
 
-export type BiRadarPatientDto = {
-  patientId: string;
-  patientCode: string;
-  name: string;
+export type BiRadarClientDto = {
+  userId: number;
+  email: string;
+  fullName: string;
+  role: string;
   programName?: string | null;
 };
 
@@ -52,7 +57,7 @@ export type BiRadarSummaryDto = {
 };
 
 export type BiRadarComputationDto = {
-  patientId: string;
+  userId: number;
   calculatedAt: string;
   axes: BiRadarAxisScoreDto[];
   priorityAxisKey: string;

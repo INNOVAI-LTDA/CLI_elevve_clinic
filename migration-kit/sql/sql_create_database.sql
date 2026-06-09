@@ -236,27 +236,12 @@ CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_checkpoints_enrollment_id
 -- BI Elevve — Radar de Longevidade
 -- Schema versionado em migrations/010_deva_elevveclinic_bi_radar.sql.
 -- Bloco replicado aqui para coerência com o snapshot SQLite.
+--
+-- F1 refactor: clientes do BI sao Users com role='client' em
+-- deva_elevveclinic_users (sem tabela dedicada bi_patients).
 -- =========================================================
 
 PRAGMA foreign_keys = ON;
-
-CREATE TABLE IF NOT EXISTS deva_elevveclinic_bi_patients (
-  id TEXT PRIMARY KEY,
-  patient_code TEXT UNIQUE NOT NULL,
-  name TEXT NOT NULL,
-  sex TEXT,
-  birth_date TEXT,
-  chronological_age INTEGER,
-  program_name TEXT,
-  program_start_date TEXT,
-  program_end_date TEXT,
-  status TEXT NOT NULL DEFAULT 'active',
-  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
-  updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
-);
-
-CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_patients_status
-  ON deva_elevveclinic_bi_patients (status);
 
 CREATE TABLE IF NOT EXISTS deva_elevveclinic_bi_radar_pillars (
   id TEXT PRIMARY KEY,
@@ -331,13 +316,13 @@ CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_radar_cluster_questions_quest
 
 CREATE TABLE IF NOT EXISTS deva_elevveclinic_bi_radar_responses (
   id TEXT PRIMARY KEY,
-  patient_id TEXT NOT NULL,
+  user_id INTEGER NOT NULL,
   question_code TEXT NOT NULL,
   response_value INTEGER NOT NULL CHECK (response_value BETWEEN 0 AND 3),
   response_date TEXT NOT NULL,
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
-  FOREIGN KEY (patient_id)
-    REFERENCES deva_elevveclinic_bi_patients (id)
+  FOREIGN KEY (user_id)
+    REFERENCES deva_elevveclinic_users (id)
     ON UPDATE RESTRICT
     ON DELETE CASCADE,
   FOREIGN KEY (question_code)
@@ -346,8 +331,8 @@ CREATE TABLE IF NOT EXISTS deva_elevveclinic_bi_radar_responses (
     ON DELETE RESTRICT
 );
 
-CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_radar_responses_patient
-  ON deva_elevveclinic_bi_radar_responses (patient_id);
+CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_radar_responses_user
+  ON deva_elevveclinic_bi_radar_responses (user_id);
 
 CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_radar_responses_question
   ON deva_elevveclinic_bi_radar_responses (question_code);
@@ -373,7 +358,7 @@ CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_radar_interpretation_ranges_p
 
 CREATE TABLE IF NOT EXISTS deva_elevveclinic_bi_radar_score_snapshots (
   id TEXT PRIMARY KEY,
-  patient_id TEXT NOT NULL,
+  user_id INTEGER NOT NULL,
   calculated_at TEXT NOT NULL,
   pillar_code TEXT NOT NULL,
   raw_score REAL NOT NULL,
@@ -386,8 +371,8 @@ CREATE TABLE IF NOT EXISTS deva_elevveclinic_bi_radar_score_snapshots (
   priority_index REAL NOT NULL,
   is_priority_axis INTEGER NOT NULL DEFAULT 0 CHECK (is_priority_axis IN (0, 1)),
   details_json TEXT,
-  FOREIGN KEY (patient_id)
-    REFERENCES deva_elevveclinic_bi_patients (id)
+  FOREIGN KEY (user_id)
+    REFERENCES deva_elevveclinic_users (id)
     ON UPDATE RESTRICT
     ON DELETE CASCADE,
   FOREIGN KEY (pillar_code)
@@ -396,11 +381,11 @@ CREATE TABLE IF NOT EXISTS deva_elevveclinic_bi_radar_score_snapshots (
     ON DELETE RESTRICT
 );
 
-CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_radar_score_snapshots_patient
-  ON deva_elevveclinic_bi_radar_score_snapshots (patient_id);
+CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_radar_score_snapshots_user
+  ON deva_elevveclinic_bi_radar_score_snapshots (user_id);
 
 CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_radar_score_snapshots_pillar
   ON deva_elevveclinic_bi_radar_score_snapshots (pillar_code);
 
-CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_radar_score_snapshots_patient_calc
-  ON deva_elevveclinic_bi_radar_score_snapshots (patient_id, calculated_at);
+CREATE INDEX IF NOT EXISTS ix_deva_elevveclinic_bi_radar_score_snapshots_user_calc
+  ON deva_elevveclinic_bi_radar_score_snapshots (user_id, calculated_at);

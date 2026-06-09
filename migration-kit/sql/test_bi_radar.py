@@ -1,9 +1,16 @@
 """
-Smoke test do Commit 2 - BI Radar de Longevidade (deva_elevveclinic_bi_*).
+Smoke test do Commit 2 (atualizado em F1) - BI Radar de
+Longevidade (deva_elevveclinic_bi_*).
 
-Aplica as migrations 010/011 (idempotente), roda 12 checks de
+F1 refactor:
+- Clientes do BI sao User de tipo Client em deva_elevveclinic_users
+  (sem tabela bi_patients).
+- IDs demo: 9001 (Paciente Demo 01) e 9002 (Paciente Demo 02).
+- Coluna user_id INTEGER com FK para users.
+
+Aplica as migrations 010/011 (idempotente), roda 14 checks de
 schema/seed/sanidade, valida os 5 runtime-stores JSON, calcula os
-scores esperados para os 2 pacientes demo e verifica idempotencia
+scores esperados para os 2 clientes demo e verifica idempotencia
 do seed.
 
 Variaveis de ambiente:
@@ -22,6 +29,11 @@ import os
 import sqlite3
 import json
 import sys
+
+
+# F1 refactor: IDs altos para nao colidir com usuarios reais.
+USER_DEMO_01 = 9001
+USER_DEMO_02 = 9002
 
 
 def main():
@@ -51,12 +63,13 @@ def main():
         print(' ' + s)
         print('=' * 70)
 
-    banner('BI Radar de Longevidade - Smoke test (Commit 2)')
+    banner('BI Radar de Longevidade - Smoke test (F1 refactor)')
 
     print('  DB:                ' + db)
     print('  Migrations dir:    ' + migrations)
     print('  Runtime-stores:    ' + runtime)
     print('  Apply migrations:  ' + ('no' if skip_apply else 'yes'))
+    print('  Demo users:        ' + str(USER_DEMO_01) + ', ' + str(USER_DEMO_02))
 
     if not os.path.exists(db):
         print()
@@ -85,12 +98,20 @@ def main():
         "WHERE type='table' AND name LIKE 'deva_elevveclinic_bi_%' "
         "ORDER BY name"
     ).fetchall()]
-    check('8 BI tables exist', len(bi_tables) == 8, 'got ' + str(len(bi_tables)))
+    # F1: 7 tabelas (sem bi_patients). Antes era 8.
+    check('7 BI tables exist', len(bi_tables) == 7, 'got ' + str(len(bi_tables)))
     for t in bi_tables:
         print('       - ' + t)
 
     fk = cur.execute('PRAGMA foreign_keys').fetchone()[0]
     check('PRAGMA foreign_keys = ON', fk == 1, 'got ' + str(fk))
+
+    # F1: nao deve existir mais a tabela bi_patients
+    bi_patients_exists = cur.execute(
+        "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='deva_elevveclinic_bi_patients'"
+    ).fetchone()[0]
+    check('bi_patients table dropped (F1)', bi_patients_exists == 0,
+          'still present' if bi_patients_exists else '')
 
     # ---------- 3) Seed counts ----------
     header('3) Seed counts')
@@ -100,7 +121,11 @@ def main():
     n_clusters  = cur.execute('SELECT COUNT(*) FROM deva_elevveclinic_bi_radar_clusters').fetchone()[0]
     n_cq        = cur.execute('SELECT COUNT(*) FROM deva_elevveclinic_bi_radar_cluster_questions').fetchone()[0]
     n_ranges    = cur.execute('SELECT COUNT(*) FROM deva_elevveclinic_bi_radar_interpretation_ranges').fetchone()[0]
-    n_patients  = cur.execute('SELECT COUNT(*) FROM deva_elevveclinic_bi_patients').fetchone()[0]
+    # F1: clientes do BI vivem em deva_elevveclinic_users com role='client'
+    n_clients   = cur.execute(
+        "SELECT COUNT(*) FROM deva_elevveclinic_users "
+        "WHERE id IN (?, ?) AND role='client'", (USER_DEMO_01, USER_DEMO_02)
+    ).fetchone()[0]
     n_responses = cur.execute('SELECT COUNT(*) FROM deva_elevveclinic_bi_radar_responses').fetchone()[0]
 
     check('5 pillars',            n_pillars   == 5,  'got ' + str(n_pillars))
@@ -108,7 +133,8 @@ def main():
     check('3 clusters',           n_clusters  == 3,  'got ' + str(n_clusters))
     check('9 cluster_questions',  n_cq        == 9,  'got ' + str(n_cq))
     check('8 ranges',             n_ranges    == 8,  'got ' + str(n_ranges))
-    check('2 patients',           n_patients  == 2,  'got ' + str(n_patients))
+    check('2 demo clients (Users with role=client)',
+          n_clients == 2, 'got ' + str(n_clients))
     check('82 responses',         n_responses == 82, 'got ' + str(n_responses))
 
     print('       questions per pillar:')
@@ -132,6 +158,15 @@ def main():
     ).fetchone()[0]
     check('CHECK response_value 0..3', viol == 0, 'violations=' + str(viol))
 
+    # FK responses.user_id -> users.id funcionando
+    fk_viol = cur.execute(
+        "SELECT COUNT(*) FROM deva_elevveclinic_bi_radar_responses r "
+        "LEFT JOIN deva_elevveclinic_users u ON u.id = r.user_id "
+        "WHERE u.id IS NULL"
+    ).fetchone()[0]
+    check('FK responses.user_id -> users.id', fk_viol == 0,
+          'orphan responses=' + str(fk_viol))
+
     # ---------- 4) JSON files ----------
     header('4) Runtime-stores JSON')
 
@@ -148,7 +183,7 @@ def main():
             check('json bi_radar_' + n + '.json', False, str(e))
 
     # ---------- 5) Expected scores ----------
-    header('5) Expected scores (BI rule pre-Commit 3)')
+    header('5) Expected scores (BI rule)')
 
     weights = {q: w for q, w in cur.execute(
         'SELECT question_code, weight FROM deva_elevveclinic_bi_radar_questions'
@@ -174,12 +209,13 @@ def main():
                 return lbl
         return 'Pendente de configuracao'
 
-    for pid in ['bi_pat_demo_01', 'bi_pat_demo_02']:
+    # F1: iterar por user_id INTEGER (em vez de patient_id TEXT)
+    for uid in (USER_DEMO_01, USER_DEMO_02):
         resp = dict(cur.execute(
             'SELECT question_code, response_value FROM deva_elevveclinic_bi_radar_responses '
-            'WHERE patient_id = ?', (pid,)
+            'WHERE user_id = ?', (uid,)
         ).fetchall())
-        print('  ' + pid + ':')
+        print('  user ' + str(uid) + ':')
 
         # 1o pass: calcula tudo
         rows = []
@@ -239,3 +275,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

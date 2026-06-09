@@ -11,6 +11,9 @@ Cobre os 6 casos do plano do Commit 3:
      depois por display_order asc.
   6. Divergencia score_max informed vs computed -> service usa
      computed e loga warning.
+
+F1 refactor: parametro `user_id` (int) substitui `patient_id` (str)
+para refletir o modelo User unificado.
 """
 from __future__ import annotations
 
@@ -33,7 +36,7 @@ from services.bi_radar_service import (
 
 def _inputs(
     *,
-    patient_id: str = "pat_x",
+    user_id: int = 9001,
     responses: dict | None = None,
     pillars: list | None = None,
     questions: list | None = None,
@@ -41,7 +44,7 @@ def _inputs(
     ranges: list | None = None,
 ) -> BiRadarInputs:
     return BiRadarInputs(
-        patient_id=patient_id,
+        user_id=user_id,
         responses_by_question=responses or {},
         pillars=pillars or [],
         questions=questions or [],

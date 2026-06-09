@@ -1,15 +1,29 @@
 -- =========================================================
 -- 011 — BI Radar de Longevidade — Seed mínimo
--- Insere 5 pilares, 41 perguntas, 3 clusters (Metabolismo,
--- Hormônios, Recuperação), 9 perguntas-chave, faixas só para
--- Metabolismo e Intestino, 2 pacientes demo e 82 respostas
--- (41 por paciente).
 --
--- Idempotente via INSERT OR IGNORE. Pacientes são fictícios
--- ("Paciente Demo 01"/"02"); nenhum dado pessoal real.
+-- F1 refactor: clientes do BI sao Users com role='client' em
+-- deva_elevveclinic_users. Cria 2 pacientes demo (IDs 9001 e 9002
+-- para nao colidir com IDs reais de 1+).
+--
+-- Insere 5 pilares, 41 perguntas, 3 clusters, 9 perguntas-chave,
+-- faixas só para Metabolismo e Intestino, 2 pacientes demo e 82
+-- respostas (41 por paciente).
+--
+-- Idempotente via INSERT OR IGNORE.
 -- =========================================================
 
 PRAGMA foreign_keys = ON;
+
+-- -------- Demo Clients (Users com role='client') --------
+-- organization_id: NULL para nao depender de deva_elevveclinic_organizations
+-- (que e' populado pelas migrations do Acelerador Medico, nao deste escopo).
+INSERT OR IGNORE INTO deva_elevveclinic_users
+  (id, email, role, full_name, is_active, organization_id, created_at, updated_at)
+VALUES
+  (9001, 'bi.demo.01@elevve.local', 'client', 'Paciente Demo 01', 1, NULL,
+   '2026-05-10T00:00:00Z', '2026-05-10T00:00:00Z'),
+  (9002, 'bi.demo.02@elevve.local', 'client', 'Paciente Demo 02', 1, NULL,
+   '2026-05-10T00:00:00Z', '2026-05-10T00:00:00Z');
 
 -- -------- Pillars (5) --------
 INSERT OR IGNORE INTO deva_elevveclinic_bi_radar_pillars
@@ -53,26 +67,26 @@ VALUES
   ('q_intestino_07', 'intestino_07', 'intestino', 'Constipação',                             'Constipação',            1.0, 1, 7),
   ('q_intestino_08', 'intestino_08', 'intestino', 'Digestão lenta',                          'Digestão lenta',         1.0, 1, 8);
 
--- Recuperação (9 — inclui recuperacao_extra_01 "acorda cansada", cluster key)
+-- Recuperação (9)
 INSERT OR IGNORE INTO deva_elevveclinic_bi_radar_questions
   (id, question_code, pillar_code, question_text, short_label, weight, is_active, display_order)
 VALUES
   ('q_recuperacao_01',       'recuperacao_01',       'recuperacao', 'Cansaço persistente',              'Cansaço persistente',         2.0, 1, 1),
-  ('q_recuperacao_02',       'recuperacao_02',       'recuperacao', 'Energia acaba rápido',             'Energia acaba rápido',        2.0, 1, 2),
-  ('q_recuperacao_03',       'recuperacao_03',       'recuperacao', 'Dificuldade de relaxar',            'Dificuldade relaxar',         1.0, 1, 3),
-  ('q_recuperacao_04',       'recuperacao_04',       'recuperacao', 'Pequenos problemas esgotam',        'Pequenos problemas esgotam',  2.0, 1, 4),
-  ('q_recuperacao_05',       'recuperacao_05',       'recuperacao', 'Piora sob estresse',                'Piora sob estresse',          2.0, 1, 5),
-  ('q_recuperacao_06',       'recuperacao_06',       'recuperacao', 'Dependência de cafeína',            'Dependência cafeína',         1.0, 1, 6),
-  ('q_recuperacao_07',       'recuperacao_07',       'recuperacao', 'Dores/tensão',                      'Dores/tensão',                1.0, 1, 7),
-  ('q_recuperacao_08',       'recuperacao_08',       'recuperacao', 'Recuperação física ruim',           'Recuperação física ruim',     2.0, 1, 8),
-  ('q_recuperacao_extra_01', 'recuperacao_extra_01', 'recuperacao', 'Acorda cansada (compartilhada)',    'Acorda cansada',              2.0, 1, 9);
+  ('q_recuperacao_02',       'recuperacao_02',       'recuperacao', 'Energia acaba rápido',            'Energia acaba rápido',        2.0, 1, 2),
+  ('q_recuperacao_03',       'recuperacao_03',       'recuperacao', 'Dificuldade de relaxar',           'Dificuldade relaxar',         1.0, 1, 3),
+  ('q_recuperacao_04',       'recuperacao_04',       'recuperacao', 'Pequenos problemas esgotam',       'Pequenos problemas esgotam',  2.0, 1, 4),
+  ('q_recuperacao_05',       'recuperacao_05',       'recuperacao', 'Piora sob estresse',               'Piora sob estresse',          2.0, 1, 5),
+  ('q_recuperacao_06',       'recuperacao_06',       'recuperacao', 'Dependência de cafeína',           'Dependência cafeína',         1.0, 1, 6),
+  ('q_recuperacao_07',       'recuperacao_07',       'recuperacao', 'Dores/tensão',                     'Dores/tensão',                1.0, 1, 7),
+  ('q_recuperacao_08',       'recuperacao_08',       'recuperacao', 'Recuperação física ruim',          'Recuperação física ruim',     2.0, 1, 8),
+  ('q_recuperacao_extra_01', 'recuperacao_extra_01', 'recuperacao', 'Acorda cansada (compartilhada)',   'Acorda cansada',              2.0, 1, 9);
 
 -- Estrutura (8)
 INSERT OR IGNORE INTO deva_elevveclinic_bi_radar_questions
   (id, question_code, pillar_code, question_text, short_label, weight, is_active, display_order)
 VALUES
   ('q_estrutura_01', 'estrutura_01', 'estrutura', 'Perda de força',                          'Perda força',                    2.0, 1, 1),
-  ('q_estrutura_02', 'estrutura_02', 'estrutura', 'Flacidez / dificuldade de massa muscular','Flacidez / massa muscular',     1.0, 1, 2),
+  ('q_estrutura_02', 'estrutura_02', 'estrutura', 'Flacidez / dificuldade de massa muscular','Flacidez / massa muscular',      1.0, 1, 2),
   ('q_estrutura_03', 'estrutura_03', 'estrutura', 'Dores físicas',                           'Dores físicas',                  1.0, 1, 3),
   ('q_estrutura_04', 'estrutura_04', 'estrutura', 'Retenção/peso nas pernas',                'Retenção/peso pernas',           2.0, 1, 4),
   ('q_estrutura_05', 'estrutura_05', 'estrutura', 'Piora de resistência',                    'Piora resistência',              2.0, 1, 5),
@@ -94,8 +108,6 @@ VALUES
   ('q_metabolismo_08', 'metabolismo_08', 'metabolismo', 'Piora de concentração',                'Piora concentração',             1.0, 1, 8);
 
 -- -------- Clusters (3, apenas onde a spec define) --------
--- Intestino e Estrutura NÃO têm cluster (spec: "Cluster não explicitado
--- no material bruto. Não inventar. Deixar configurável.").
 INSERT OR IGNORE INTO deva_elevveclinic_bi_radar_clusters
   (id, cluster_code, pillar_code, cluster_name, activation_threshold, minimum_key_symptoms, bonus_points, is_active)
 VALUES
@@ -118,8 +130,6 @@ VALUES
   ('cq_rc_x1', 'cl_recuperacao', 'recuperacao_extra_01');
 
 -- -------- Interpretation Ranges (apenas Metabolismo e Intestino) --------
--- Hormônios, Recuperação e Estrutura ficam SEM ranges para acionar
--- "Pendente de configuração" no service.
 INSERT OR IGNORE INTO deva_elevveclinic_bi_radar_interpretation_ranges
   (id, pillar_code, label, min_score, max_score, priority_level)
 VALUES
@@ -134,124 +144,118 @@ VALUES
   ('ir_intestino_03',   'intestino',   'Desregulação importante', 17.0, 24.0, 3),
   ('ir_intestino_04',   'intestino',   'Eixo prioritário',        25.0, NULL, 4);
 
--- -------- Patients (2, fictícios) --------
-INSERT OR IGNORE INTO deva_elevveclinic_bi_patients
-  (id, patient_code, name, sex, birth_date, chronological_age, program_name, program_start_date, program_end_date, status)
-VALUES
-  ('bi_pat_demo_01', 'BI-DEMO-01', 'Paciente Demo 01', 'F', '1980-05-12', 46, 'Mentoria Acelerador Medico', '2025-09-01', NULL, 'active'),
-  ('bi_pat_demo_02', 'BI-DEMO-02', 'Paciente Demo 02', 'F', '1975-09-23', 50, 'Mentoria Acelerador Medico', '2025-08-15', NULL, 'active');
-
 -- -------- Responses (82 = 41 × 2) --------
--- Paciente 01: Metabolismo cluster ATIVO, Intestino em faixa alta,
--- Recuperação sem cluster, Hormônios/Estrutura com classificação
--- "Pendente de configuração".
--- Paciente 02: Recuperação cluster ATIVO, Hormônios cluster ATIVO
--- (mas sem range → "Pendente de configuração"), Metabolismo/Intestino
--- em faixa intermediária, Estrutura sem range.
+-- F1 refactor: user_id INTEGER (9001, 9002) em vez de TEXT.
+-- user 9001 = Metabolismo cluster ATIVO, Intestino em faixa alta,
+--   Recuperação sem cluster, Hormônios/Estrutura com classificação
+--   "Pendente de configuração".
+-- user 9002 = Recuperação cluster ATIVO, Hormônios cluster ATIVO
+--   (mas sem range → "Pendente de configuração"), Metabolismo/Intestino
+--   em faixa intermediária, Estrutura sem range.
 
--- Paciente Demo 01
+-- Paciente Demo 01 (user 9001)
 INSERT OR IGNORE INTO deva_elevveclinic_bi_radar_responses
-  (id, patient_id, question_code, response_value, response_date)
+  (id, user_id, question_code, response_value, response_date)
 VALUES
   -- Metabolismo (3 sintomas-chave em resposta 3 → cluster_ativo=true)
-  ('r_01_metabolismo_01', 'bi_pat_demo_01', 'metabolismo_01', 3, '2026-05-10'),
-  ('r_01_metabolismo_02', 'bi_pat_demo_01', 'metabolismo_02', 1, '2026-05-10'),
-  ('r_01_metabolismo_03', 'bi_pat_demo_01', 'metabolismo_03', 2, '2026-05-10'),
-  ('r_01_metabolismo_04', 'bi_pat_demo_01', 'metabolismo_04', 2, '2026-05-10'),
-  ('r_01_metabolismo_05', 'bi_pat_demo_01', 'metabolismo_05', 3, '2026-05-10'),
-  ('r_01_metabolismo_06', 'bi_pat_demo_01', 'metabolismo_06', 3, '2026-05-10'),
-  ('r_01_metabolismo_07', 'bi_pat_demo_01', 'metabolismo_07', 2, '2026-05-10'),
-  ('r_01_metabolismo_08', 'bi_pat_demo_01', 'metabolismo_08', 1, '2026-05-10'),
+  ('r_01_metabolismo_01', 9001, 'metabolismo_01', 3, '2026-05-10'),
+  ('r_01_metabolismo_02', 9001, 'metabolismo_02', 1, '2026-05-10'),
+  ('r_01_metabolismo_03', 9001, 'metabolismo_03', 2, '2026-05-10'),
+  ('r_01_metabolismo_04', 9001, 'metabolismo_04', 2, '2026-05-10'),
+  ('r_01_metabolismo_05', 9001, 'metabolismo_05', 3, '2026-05-10'),
+  ('r_01_metabolismo_06', 9001, 'metabolismo_06', 3, '2026-05-10'),
+  ('r_01_metabolismo_07', 9001, 'metabolismo_07', 2, '2026-05-10'),
+  ('r_01_metabolismo_08', 9001, 'metabolismo_08', 1, '2026-05-10'),
   -- Intestino (sem cluster; raw 19 → "Desregulação importante")
-  ('r_01_intestino_01', 'bi_pat_demo_01', 'intestino_01', 2, '2026-05-10'),
-  ('r_01_intestino_02', 'bi_pat_demo_01', 'intestino_02', 2, '2026-05-10'),
-  ('r_01_intestino_03', 'bi_pat_demo_01', 'intestino_03', 1, '2026-05-10'),
-  ('r_01_intestino_04', 'bi_pat_demo_01', 'intestino_04', 2, '2026-05-10'),
-  ('r_01_intestino_05', 'bi_pat_demo_01', 'intestino_05', 2, '2026-05-10'),
-  ('r_01_intestino_06', 'bi_pat_demo_01', 'intestino_06', 1, '2026-05-10'),
-  ('r_01_intestino_07', 'bi_pat_demo_01', 'intestino_07', 1, '2026-05-10'),
-  ('r_01_intestino_08', 'bi_pat_demo_01', 'intestino_08', 1, '2026-05-10'),
+  ('r_01_intestino_01', 9001, 'intestino_01', 2, '2026-05-10'),
+  ('r_01_intestino_02', 9001, 'intestino_02', 2, '2026-05-10'),
+  ('r_01_intestino_03', 9001, 'intestino_03', 1, '2026-05-10'),
+  ('r_01_intestino_04', 9001, 'intestino_04', 2, '2026-05-10'),
+  ('r_01_intestino_05', 9001, 'intestino_05', 2, '2026-05-10'),
+  ('r_01_intestino_06', 9001, 'intestino_06', 1, '2026-05-10'),
+  ('r_01_intestino_07', 9001, 'intestino_07', 1, '2026-05-10'),
+  ('r_01_intestino_08', 9001, 'intestino_08', 1, '2026-05-10'),
   -- Hormônios (apenas 2 chaves ≥ 2 → cluster_ativo=false; "Pendente de configuração")
-  ('r_01_hormonios_01', 'bi_pat_demo_01', 'hormonios_01', 2, '2026-05-10'),
-  ('r_01_hormonios_02', 'bi_pat_demo_01', 'hormonios_02', 2, '2026-05-10'),
-  ('r_01_hormonios_03', 'bi_pat_demo_01', 'hormonios_03', 2, '2026-05-10'),
-  ('r_01_hormonios_04', 'bi_pat_demo_01', 'hormonios_04', 1, '2026-05-10'),
-  ('r_01_hormonios_05', 'bi_pat_demo_01', 'hormonios_05', 1, '2026-05-10'),
-  ('r_01_hormonios_06', 'bi_pat_demo_01', 'hormonios_06', 2, '2026-05-10'),
-  ('r_01_hormonios_07', 'bi_pat_demo_01', 'hormonios_07', 1, '2026-05-10'),
-  ('r_01_hormonios_08', 'bi_pat_demo_01', 'hormonios_08', 2, '2026-05-10'),
+  ('r_01_hormonios_01', 9001, 'hormonios_01', 2, '2026-05-10'),
+  ('r_01_hormonios_02', 9001, 'hormonios_02', 2, '2026-05-10'),
+  ('r_01_hormonios_03', 9001, 'hormonios_03', 2, '2026-05-10'),
+  ('r_01_hormonios_04', 9001, 'hormonios_04', 1, '2026-05-10'),
+  ('r_01_hormonios_05', 9001, 'hormonios_05', 1, '2026-05-10'),
+  ('r_01_hormonios_06', 9001, 'hormonios_06', 2, '2026-05-10'),
+  ('r_01_hormonios_07', 9001, 'hormonios_07', 1, '2026-05-10'),
+  ('r_01_hormonios_08', 9001, 'hormonios_08', 2, '2026-05-10'),
   -- Recuperação (apenas 2 chaves ≥ 2 → cluster_ativo=false; "Pendente de configuração")
-  ('r_01_recuperacao_01',       'bi_pat_demo_01', 'recuperacao_01',       1, '2026-05-10'),
-  ('r_01_recuperacao_02',       'bi_pat_demo_01', 'recuperacao_02',       2, '2026-05-10'),
-  ('r_01_recuperacao_03',       'bi_pat_demo_01', 'recuperacao_03',       1, '2026-05-10'),
-  ('r_01_recuperacao_04',       'bi_pat_demo_01', 'recuperacao_04',       1, '2026-05-10'),
-  ('r_01_recuperacao_05',       'bi_pat_demo_01', 'recuperacao_05',       2, '2026-05-10'),
-  ('r_01_recuperacao_06',       'bi_pat_demo_01', 'recuperacao_06',       2, '2026-05-10'),
-  ('r_01_recuperacao_07',       'bi_pat_demo_01', 'recuperacao_07',       1, '2026-05-10'),
-  ('r_01_recuperacao_08',       'bi_pat_demo_01', 'recuperacao_08',       1, '2026-05-10'),
-  ('r_01_recuperacao_extra_01', 'bi_pat_demo_01', 'recuperacao_extra_01', 1, '2026-05-10'),
+  ('r_01_recuperacao_01',       9001, 'recuperacao_01',       1, '2026-05-10'),
+  ('r_01_recuperacao_02',       9001, 'recuperacao_02',       2, '2026-05-10'),
+  ('r_01_recuperacao_03',       9001, 'recuperacao_03',       1, '2026-05-10'),
+  ('r_01_recuperacao_04',       9001, 'recuperacao_04',       1, '2026-05-10'),
+  ('r_01_recuperacao_05',       9001, 'recuperacao_05',       2, '2026-05-10'),
+  ('r_01_recuperacao_06',       9001, 'recuperacao_06',       2, '2026-05-10'),
+  ('r_01_recuperacao_07',       9001, 'recuperacao_07',       1, '2026-05-10'),
+  ('r_01_recuperacao_08',       9001, 'recuperacao_08',       1, '2026-05-10'),
+  ('r_01_recuperacao_extra_01', 9001, 'recuperacao_extra_01', 1, '2026-05-10'),
   -- Estrutura (sem cluster; "Pendente de configuração")
-  ('r_01_estrutura_01', 'bi_pat_demo_01', 'estrutura_01', 1, '2026-05-10'),
-  ('r_01_estrutura_02', 'bi_pat_demo_01', 'estrutura_02', 1, '2026-05-10'),
-  ('r_01_estrutura_03', 'bi_pat_demo_01', 'estrutura_03', 2, '2026-05-10'),
-  ('r_01_estrutura_04', 'bi_pat_demo_01', 'estrutura_04', 1, '2026-05-10'),
-  ('r_01_estrutura_05', 'bi_pat_demo_01', 'estrutura_05', 1, '2026-05-10'),
-  ('r_01_estrutura_06', 'bi_pat_demo_01', 'estrutura_06', 1, '2026-05-10'),
-  ('r_01_estrutura_07', 'bi_pat_demo_01', 'estrutura_07', 1, '2026-05-10'),
-  ('r_01_estrutura_08', 'bi_pat_demo_01', 'estrutura_08', 2, '2026-05-10');
+  ('r_01_estrutura_01', 9001, 'estrutura_01', 1, '2026-05-10'),
+  ('r_01_estrutura_02', 9001, 'estrutura_02', 1, '2026-05-10'),
+  ('r_01_estrutura_03', 9001, 'estrutura_03', 2, '2026-05-10'),
+  ('r_01_estrutura_04', 9001, 'estrutura_04', 1, '2026-05-10'),
+  ('r_01_estrutura_05', 9001, 'estrutura_05', 1, '2026-05-10'),
+  ('r_01_estrutura_06', 9001, 'estrutura_06', 1, '2026-05-10'),
+  ('r_01_estrutura_07', 9001, 'estrutura_07', 1, '2026-05-10'),
+  ('r_01_estrutura_08', 9001, 'estrutura_08', 2, '2026-05-10');
 
--- Paciente Demo 02
+-- Paciente Demo 02 (user 9002)
 INSERT OR IGNORE INTO deva_elevveclinic_bi_radar_responses
-  (id, patient_id, question_code, response_value, response_date)
+  (id, user_id, question_code, response_value, response_date)
 VALUES
   -- Metabolismo (todas 1 → cluster_ativo=false; raw 11 → "Atenção funcional")
-  ('r_02_metabolismo_01', 'bi_pat_demo_02', 'metabolismo_01', 1, '2026-05-10'),
-  ('r_02_metabolismo_02', 'bi_pat_demo_02', 'metabolismo_02', 1, '2026-05-10'),
-  ('r_02_metabolismo_03', 'bi_pat_demo_02', 'metabolismo_03', 1, '2026-05-10'),
-  ('r_02_metabolismo_04', 'bi_pat_demo_02', 'metabolismo_04', 1, '2026-05-10'),
-  ('r_02_metabolismo_05', 'bi_pat_demo_02', 'metabolismo_05', 1, '2026-05-10'),
-  ('r_02_metabolismo_06', 'bi_pat_demo_02', 'metabolismo_06', 1, '2026-05-10'),
-  ('r_02_metabolismo_07', 'bi_pat_demo_02', 'metabolismo_07', 1, '2026-05-10'),
-  ('r_02_metabolismo_08', 'bi_pat_demo_02', 'metabolismo_08', 1, '2026-05-10'),
+  ('r_02_metabolismo_01', 9002, 'metabolismo_01', 1, '2026-05-10'),
+  ('r_02_metabolismo_02', 9002, 'metabolismo_02', 1, '2026-05-10'),
+  ('r_02_metabolismo_03', 9002, 'metabolismo_03', 1, '2026-05-10'),
+  ('r_02_metabolismo_04', 9002, 'metabolismo_04', 1, '2026-05-10'),
+  ('r_02_metabolismo_05', 9002, 'metabolismo_05', 1, '2026-05-10'),
+  ('r_02_metabolismo_06', 9002, 'metabolismo_06', 1, '2026-05-10'),
+  ('r_02_metabolismo_07', 9002, 'metabolismo_07', 1, '2026-05-10'),
+  ('r_02_metabolismo_08', 9002, 'metabolismo_08', 1, '2026-05-10'),
   -- Intestino (todas 1 → cluster_ativo=false; raw 12 → "Atenção funcional")
-  ('r_02_intestino_01', 'bi_pat_demo_02', 'intestino_01', 1, '2026-05-10'),
-  ('r_02_intestino_02', 'bi_pat_demo_02', 'intestino_02', 1, '2026-05-10'),
-  ('r_02_intestino_03', 'bi_pat_demo_02', 'intestino_03', 1, '2026-05-10'),
-  ('r_02_intestino_04', 'bi_pat_demo_02', 'intestino_04', 1, '2026-05-10'),
-  ('r_02_intestino_05', 'bi_pat_demo_02', 'intestino_05', 1, '2026-05-10'),
-  ('r_02_intestino_06', 'bi_pat_demo_02', 'intestino_06', 1, '2026-05-10'),
-  ('r_02_intestino_07', 'bi_pat_demo_02', 'intestino_07', 1, '2026-05-10'),
-  ('r_02_intestino_08', 'bi_pat_demo_02', 'intestino_08', 1, '2026-05-10'),
+  ('r_02_intestino_01', 9002, 'intestino_01', 1, '2026-05-10'),
+  ('r_02_intestino_02', 9002, 'intestino_02', 1, '2026-05-10'),
+  ('r_02_intestino_03', 9002, 'intestino_03', 1, '2026-05-10'),
+  ('r_02_intestino_04', 9002, 'intestino_04', 1, '2026-05-10'),
+  ('r_02_intestino_05', 9002, 'intestino_05', 1, '2026-05-10'),
+  ('r_02_intestino_06', 9002, 'intestino_06', 1, '2026-05-10'),
+  ('r_02_intestino_07', 9002, 'intestino_07', 1, '2026-05-10'),
+  ('r_02_intestino_08', 9002, 'intestino_08', 1, '2026-05-10'),
   -- Hormônios (3 chaves em 2 → cluster_ativo=true; "Pendente de configuração" porque sem range)
-  ('r_02_hormonios_01', 'bi_pat_demo_02', 'hormonios_01', 1, '2026-05-10'),
-  ('r_02_hormonios_02', 'bi_pat_demo_02', 'hormonios_02', 2, '2026-05-10'),
-  ('r_02_hormonios_03', 'bi_pat_demo_02', 'hormonios_03', 1, '2026-05-10'),
-  ('r_02_hormonios_04', 'bi_pat_demo_02', 'hormonios_04', 1, '2026-05-10'),
-  ('r_02_hormonios_05', 'bi_pat_demo_02', 'hormonios_05', 2, '2026-05-10'),
-  ('r_02_hormonios_06', 'bi_pat_demo_02', 'hormonios_06', 2, '2026-05-10'),
-  ('r_02_hormonios_07', 'bi_pat_demo_02', 'hormonios_07', 1, '2026-05-10'),
-  ('r_02_hormonios_08', 'bi_pat_demo_02', 'hormonios_08', 2, '2026-05-10'),
+  ('r_02_hormonios_01', 9002, 'hormonios_01', 1, '2026-05-10'),
+  ('r_02_hormonios_02', 9002, 'hormonios_02', 2, '2026-05-10'),
+  ('r_02_hormonios_03', 9002, 'hormonios_03', 1, '2026-05-10'),
+  ('r_02_hormonios_04', 9002, 'hormonios_04', 1, '2026-05-10'),
+  ('r_02_hormonios_05', 9002, 'hormonios_05', 2, '2026-05-10'),
+  ('r_02_hormonios_06', 9002, 'hormonios_06', 2, '2026-05-10'),
+  ('r_02_hormonios_07', 9002, 'hormonios_07', 1, '2026-05-10'),
+  ('r_02_hormonios_08', 9002, 'hormonios_08', 2, '2026-05-10'),
   -- Recuperação (3 chaves em ≥2 → cluster_ativo=true; "Pendente de configuração")
-  ('r_02_recuperacao_01',       'bi_pat_demo_02', 'recuperacao_01',       1, '2026-05-10'),
-  ('r_02_recuperacao_02',       'bi_pat_demo_02', 'recuperacao_02',       3, '2026-05-10'),
-  ('r_02_recuperacao_03',       'bi_pat_demo_02', 'recuperacao_03',       1, '2026-05-10'),
-  ('r_02_recuperacao_04',       'bi_pat_demo_02', 'recuperacao_04',       1, '2026-05-10'),
-  ('r_02_recuperacao_05',       'bi_pat_demo_02', 'recuperacao_05',       1, '2026-05-10'),
-  ('r_02_recuperacao_06',       'bi_pat_demo_02', 'recuperacao_06',       2, '2026-05-10'),
-  ('r_02_recuperacao_07',       'bi_pat_demo_02', 'recuperacao_07',       1, '2026-05-10'),
-  ('r_02_recuperacao_08',       'bi_pat_demo_02', 'recuperacao_08',       1, '2026-05-10'),
-  ('r_02_recuperacao_extra_01', 'bi_pat_demo_02', 'recuperacao_extra_01', 2, '2026-05-10'),
+  ('r_02_recuperacao_01',       9002, 'recuperacao_01',       1, '2026-05-10'),
+  ('r_02_recuperacao_02',       9002, 'recuperacao_02',       3, '2026-05-10'),
+  ('r_02_recuperacao_03',       9002, 'recuperacao_03',       1, '2026-05-10'),
+  ('r_02_recuperacao_04',       9002, 'recuperacao_04',       1, '2026-05-10'),
+  ('r_02_recuperacao_05',       9002, 'recuperacao_05',       1, '2026-05-10'),
+  ('r_02_recuperacao_06',       9002, 'recuperacao_06',       2, '2026-05-10'),
+  ('r_02_recuperacao_07',       9002, 'recuperacao_07',       1, '2026-05-10'),
+  ('r_02_recuperacao_08',       9002, 'recuperacao_08',       1, '2026-05-10'),
+  ('r_02_recuperacao_extra_01', 9002, 'recuperacao_extra_01', 2, '2026-05-10'),
   -- Estrutura (sem cluster; "Pendente de configuração")
-  ('r_02_estrutura_01', 'bi_pat_demo_02', 'estrutura_01', 1, '2026-05-10'),
-  ('r_02_estrutura_02', 'bi_pat_demo_02', 'estrutura_02', 1, '2026-05-10'),
-  ('r_02_estrutura_03', 'bi_pat_demo_02', 'estrutura_03', 1, '2026-05-10'),
-  ('r_02_estrutura_04', 'bi_pat_demo_02', 'estrutura_04', 1, '2026-05-10'),
-  ('r_02_estrutura_05', 'bi_pat_demo_02', 'estrutura_05', 1, '2026-05-10'),
-  ('r_02_estrutura_06', 'bi_pat_demo_02', 'estrutura_06', 1, '2026-05-10'),
-  ('r_02_estrutura_07', 'bi_pat_demo_02', 'estrutura_07', 1, '2026-05-10'),
-  ('r_02_estrutura_08', 'bi_pat_demo_02', 'estrutura_08', 1, '2026-05-10');
+  ('r_02_estrutura_01', 9002, 'estrutura_01', 1, '2026-05-10'),
+  ('r_02_estrutura_02', 9002, 'estrutura_02', 1, '2026-05-10'),
+  ('r_02_estrutura_03', 9002, 'estrutura_03', 1, '2026-05-10'),
+  ('r_02_estrutura_04', 9002, 'estrutura_04', 1, '2026-05-10'),
+  ('r_02_estrutura_05', 9002, 'estrutura_05', 1, '2026-05-10'),
+  ('r_02_estrutura_06', 9002, 'estrutura_06', 1, '2026-05-10'),
+  ('r_02_estrutura_07', 9002, 'estrutura_07', 1, '2026-05-10'),
+  ('r_02_estrutura_08', 9002, 'estrutura_08', 1, '2026-05-10');
 
--- Sanidade pos-seed (queries de leitura, não alteram estado)
+-- Sanidade pos-seed (queries de leitura, nao alteram estado)
 SELECT
   pillar_code,
   (SELECT COUNT(*) FROM deva_elevveclinic_bi_radar_questions q WHERE q.pillar_code = p.pillar_code AND q.is_active = 1) AS questions,
@@ -260,6 +264,7 @@ SELECT
 FROM deva_elevveclinic_bi_radar_pillars p
 ORDER BY p.display_order;
 
-SELECT patient_id, COUNT(*) AS total_responses
+SELECT user_id, COUNT(*) AS total_responses
 FROM deva_elevveclinic_bi_radar_responses
-GROUP BY patient_id;
+GROUP BY user_id
+ORDER BY user_id;

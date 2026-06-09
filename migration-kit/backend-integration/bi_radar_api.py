@@ -1,17 +1,21 @@
 """BI Radar de Longevidade - FastAPI router (prefixo /bi).
 
+F1 refactor: clientes do BI sao User de tipo Client em
+deva_elevveclinic_users (sem tabela bi_patients). Endpoints de
+listagem/leitura operam sobre users WHERE role='client'.
+
 Endpoints:
   GET  /bi/health
-  GET  /bi/radar/pillars                   -> list[BiRadarPillarDto]
-  GET  /bi/radar/patients                  -> list[BiRadarPatientDto]
-  GET  /bi/radar/patients/{patient_id}     -> BiRadarComputationDto
+  GET  /bi/radar/pillars
+  GET  /bi/radar/clients                       -> list[BiRadarClientDto]
+  GET  /bi/radar/clients/{user_id}              -> BiRadarComputationDto
 
 Erros 4xx: devolvidos via JSONResponse no formato canonico
 { "error": { "status", "code", "message", "details" } }. 422 (Pydantic)
 cai no handler default do FastAPI ({"detail": [...]}) - documentado
 como pendencia para sprint futura.
 
-Cada chamada a /bi/radar/patients/{id} calcula o Radar via
+Cada chamada a /bi/radar/clients/{id} calcula o Radar via
 services.bi_radar_service.compute_bi_radar (funcao pura) e
 persiste 1 snapshot por pilar em
 deva_elevveclinic_bi_radar_score_snapshots (auditoria).
@@ -27,8 +31,8 @@ from fastapi.responses import JSONResponse
 
 from schemas.bi_radar import (
     BiRadarAxisScoreDto,
+    BiRadarClientDto,
     BiRadarComputationDto,
-    BiRadarPatientDto,
     BiRadarPillarDto,
     BiRadarSummaryDto,
 )
@@ -57,7 +61,7 @@ def _get_repository() -> BiRadarRepository:
 
 
 def _to_inputs(
-    patient_id: str,
+    user_id: int,
     repo: BiRadarRepository,
 ) -> BiRadarInputs:
     """Materializa os inputs do service a partir do banco."""
@@ -66,7 +70,7 @@ def _to_inputs(
     clusters_rows = repo.list_clusters()
     cluster_q_rows = repo.list_cluster_questions()
     ranges_rows = repo.list_interpretation_ranges()
-    responses_rows = repo.list_responses(patient_id)
+    responses_rows = repo.list_responses(user_id)
 
     pillars = [
         BiRadarPillarInput(
@@ -121,7 +125,7 @@ def _to_inputs(
     }
 
     return BiRadarInputs(
-        patient_id=patient_id,
+        user_id=user_id,
         responses_by_question=responses_by_q,
         pillars=pillars,
         questions=questions,
@@ -131,7 +135,7 @@ def _to_inputs(
 
 
 def _persist_snapshots(
-    patient_id: str,
+    user_id: int,
     calculated_at: str,
     axes,
     repo: BiRadarRepository,
@@ -151,11 +155,11 @@ def _persist_snapshots(
         snapshot_id = (
             f"snap_{ax.pillar_code}_"
             f"{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S%f')}_"
-            f"{patient_id[:8]}"
+            f"u{user_id}"
         )
         repo.insert_snapshot({
             "id": snapshot_id,
-            "patient_id": patient_id,
+            "user_id": user_id,
             "calculated_at": calculated_at,
             "pillar_code": ax.pillar_code,
             "raw_score": ax.raw_score,
@@ -209,40 +213,50 @@ def list_pillars():
     ]
 
 
-@router.get("/radar/patients", response_model=list[BiRadarPatientDto])
-def list_patients():
+@router.get("/radar/clients", response_model=list[BiRadarClientDto])
+def list_clients():
+    """Lista os clientes (User de tipo Client) do BI.
+
+    F1 refactor: substitui /bi/radar/patients. A fonte de dados
+    agora e' deva_elevveclinic_users filtrada por role='client'.
+    """
     repo = _get_repository()
-    rows = repo.list_patients()
+    rows = repo.list_clients()
     return [
-        BiRadarPatientDto(
-            patientId=r["id"],
-            patientCode=r["patient_code"],
-            name=r["name"],
-            programName=r.get("program_name"),
+        BiRadarClientDto(
+            userId=r["id"],
+            email=r["email"],
+            fullName=r["full_name"],
+            role="client",
+            programName=None,
         )
         for r in rows
     ]
 
 
 @router.get(
-    "/radar/patients/{patient_id}",
+    "/radar/clients/{user_id}",
     response_model=BiRadarComputationDto,
 )
-def get_patient_radar(patient_id: str):
+def get_client_radar(user_id: int):
+    """Calcula o BI Radar para o cliente (User de tipo Client) pelo id.
+
+    F1 refactor: substitui /bi/radar/patients/{patient_id}.
+    """
     repo = _get_repository()
-    patient = repo.get_patient(patient_id)
-    if patient is None:
+    client = repo.get_client(user_id)
+    if client is None:
         return _error_response(
             status=404,
-            code="PATIENT_NOT_FOUND",
-            message=f"Paciente '{patient_id}' nao encontrado.",
-            details={"patient_id": patient_id},
+            code="CLIENT_NOT_FOUND",
+            message=f"Cliente (user_id={user_id}) nao encontrado.",
+            details={"user_id": user_id},
         )
 
-    inputs = _to_inputs(patient_id, repo)
+    inputs = _to_inputs(user_id, repo)
     result = compute_bi_radar(inputs)
     _persist_snapshots(
-        patient_id=patient_id,
+        user_id=user_id,
         calculated_at=result.calculated_at,
         axes=result.axes,
         repo=repo,
@@ -274,7 +288,7 @@ def get_patient_radar(patient_id: str):
     )
 
     return BiRadarComputationDto(
-        patientId=result.patient_id,
+        userId=result.user_id,
         calculatedAt=result.calculated_at,
         axes=axes_dto,
         priorityAxisKey=result.summary.priority_axis_code or "",

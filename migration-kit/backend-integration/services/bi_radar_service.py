@@ -7,6 +7,10 @@ dicionarios/dataclasses como entrada e devolve dataclasses como
 saida. A camada de repository (commit 4) sera responsavel por
 buscar as entradas no banco e persistir o snapshot.
 
+F1 refactor: o parametro antes chamado `patient_id` agora se chama
+`user_id` e tem tipo `int`, refletindo que o cliente do BI e' um User
+de tipo Client em `deva_elevveclinic_users` (modelo unificado).
+
 Regra (fonte: docs/BI_RULE_RADAR_CANONICAL.md do bundle):
 
   5 pilares fixos: hormonios, intestino, recuperacao, estrutura, metabolismo.
@@ -111,8 +115,12 @@ class BiRadarRangeInput:
 
 @dataclass(frozen=True)
 class BiRadarInputs:
-    """Inputs puros para o calculo. Repository popula, service consome."""
-    patient_id: str
+    """Inputs puros para o calculo. Repository popula, service consome.
+
+    F1 refactor: user_id e' int (era patient_id str). Reflete que o
+    cliente do BI e' um User de tipo Client.
+    """
+    user_id: int
     responses_by_question: Mapping[str, int]
     pillars: Sequence[BiRadarPillarInput]
     questions: Sequence[BiRadarQuestionInput]
@@ -167,8 +175,8 @@ class BiRadarSummary:
 
 @dataclass(frozen=True)
 class BiRadarComputation:
-    """Resultado final do calculo para 1 paciente."""
-    patient_id: str
+    """Resultado final do calculo para 1 cliente (User de tipo Client)."""
+    user_id: int
     calculated_at: str
     axes: tuple[BiRadarAxisComputation, ...]
     summary: BiRadarSummary
@@ -179,7 +187,7 @@ class BiRadarComputation:
 # ============================================================
 
 def compute_bi_radar(inputs: BiRadarInputs) -> BiRadarComputation:
-    """Calcula o Radar de Longevidade para o paciente.
+    """Calcula o Radar de Longevidade para o cliente (User de tipo Client).
 
     Funcao pura: nao toca em IO, nao le banco, nao faz HTTP. Recebe
     as entradas ja materializadas e devolve um BiRadarComputation
@@ -225,7 +233,7 @@ def compute_bi_radar(inputs: BiRadarInputs) -> BiRadarComputation:
     calculated_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%fZ")
 
     return BiRadarComputation(
-        patient_id=inputs.patient_id,
+        user_id=inputs.user_id,
         calculated_at=calculated_at,
         axes=axes,
         summary=summary,
