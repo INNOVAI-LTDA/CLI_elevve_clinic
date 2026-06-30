@@ -1,0 +1,1 @@
+C:\Users\dmene\Projetos\innovai\git\CLI_elevve_clinic\migration-kit\admin-tui\target\debug\db_query_test.exe: C:\Users\dmene\Projetos\innovai\git\CLI_elevve_clinic\migration-kit\admin-tui\src\db_query_test.rs

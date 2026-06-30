@@ -1,0 +1,40 @@
+{
+  "generated_at": "2026-06-08T14:54:11",
+  "source_zip": "/mnt/data/EIXO_UI_Bundle.zip",
+  "extracted_assets": [
+    "assets/icons/icones_full.png",
+    "assets/croquis/eixo_sidebar.png",
+    "assets/croquis/Historico_evolucao.png",
+    "assets/croquis/Relatorio_output.png",
+    "assets/croquis/Visao_geral.png",
+    "assets/croquis/Visao_radar.png"
+  ],
+  "files": [
+    ".claude/commands/build-radar-vertical-slice.md",
+    ".claude/commands/inspect-elevve-bi.md",
+    ".claude/commands/review-elevve-bi.md",
+    "CLAUDE_ADDENDUM_ELEVVE_VERTICAL_SLICE.md",
+    "README_BUNDLE_VERTICAL_SLICE.md",
+    "assets/croquis/Historico_evolucao.png",
+    "assets/croquis/Relatorio_output.png",
+    "assets/croquis/Visao_geral.png",
+    "assets/croquis/Visao_radar.png",
+    "assets/croquis/eixo_sidebar.png",
+    "assets/icons/icones_full.png",
+    "docs/ACCEPTANCE_CRITERIA_VERTICAL_SLICE.md",
+    "docs/BI_RULE_RADAR_CANONICAL.md",
+    "docs/DB_VERTICAL_SLICE_SPEC.md",
+    "docs/IMPLEMENTATION_STRATEGY.md",
+    "docs/UI_SCREEN_MAPPING_FROM_CROQUIS.md",
+    "docs/raw_BI_ElevveClinic.txt",
+    "prompts/00_INIT_EXISTING_REPO_WITH_UI_CROQUIS.md",
+    "prompts/01_INSPECT_EXISTING_FEATURES_AND_CONTRACTS.md",
+    "prompts/02_CREATE_RADAR_DB_MIGRATION_AND_SEED.md",
+    "prompts/03_IMPLEMENT_RADAR_SCORING_BACKEND.md",
+    "prompts/04_IMPLEMENT_RADAR_API_CONTRACT.md",
+    "prompts/05_IMPLEMENT_RADAR_FRONTEND_FROM_CROQUIS.md",
+    "prompts/06_IMPLEMENT_HISTORY_AND_REPORT_STUBS.md",
+    "prompts/07_REVIEW_VERTICAL_SLICE.md",
+    "tasks/WBS_VERTICAL_SLICE.md"
+  ]
+}

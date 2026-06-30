@@ -1,0 +1,8 @@
+C:\Users\dmene\Projetos\innovai\git\CLI_elevve_clinic\migration-kit\admin-tui\target\debug\deps\strum-83fdaf0712442c11.d: C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\strum-0.27.2\src\lib.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\strum-0.27.2\src\additional_attributes.rs
+
+C:\Users\dmene\Projetos\innovai\git\CLI_elevve_clinic\migration-kit\admin-tui\target\debug\deps\libstrum-83fdaf0712442c11.rlib: C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\strum-0.27.2\src\lib.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\strum-0.27.2\src\additional_attributes.rs
+
+C:\Users\dmene\Projetos\innovai\git\CLI_elevve_clinic\migration-kit\admin-tui\target\debug\deps\libstrum-83fdaf0712442c11.rmeta: C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\strum-0.27.2\src\lib.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\strum-0.27.2\src\additional_attributes.rs
+
+C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\strum-0.27.2\src\lib.rs:
+C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\strum-0.27.2\src\additional_attributes.rs:

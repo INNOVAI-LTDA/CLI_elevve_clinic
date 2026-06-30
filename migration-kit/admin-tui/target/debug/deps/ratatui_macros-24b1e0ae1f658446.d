@@ -1,0 +1,10 @@
+C:\Users\dmene\Projetos\innovai\git\CLI_elevve_clinic\migration-kit\admin-tui\target\debug\deps\ratatui_macros-24b1e0ae1f658446.d: C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\lib.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\layout.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\line.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\row.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\span.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\text.rs
+
+C:\Users\dmene\Projetos\innovai\git\CLI_elevve_clinic\migration-kit\admin-tui\target\debug\deps\libratatui_macros-24b1e0ae1f658446.rmeta: C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\lib.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\layout.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\line.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\row.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\span.rs C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\text.rs
+
+C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\lib.rs:
+C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\layout.rs:
+C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\line.rs:
+C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\row.rs:
+C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\span.rs:
+C:\Users\dmene\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ratatui-macros-0.7.0\src\text.rs:

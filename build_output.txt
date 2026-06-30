@@ -1,0 +1,9 @@
+﻿cargo : error: could not find `Cargo.toml` in 
+`C:\Users\dmene\Projetos\innovai\git\CLI_elevve_clinic` or any parent directory
+No linha:1 caractere:8
++ ls -l; cargo run --bin admin-tui 2>&1 | Out-File -Encoding UTF8 build ...
++        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error: could no...arent directory 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
